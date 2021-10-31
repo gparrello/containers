@@ -9,5 +9,5 @@ jobs:
       - uses: actions/checkout@v2
       - name: Build the stack
         run: docker-compose up -d
-      - test: Test
+      - name: Test
         run: docker run --network container:home_assistant appropriate/curl -s --retry 10 --retry-connrefused https://localhost:8123/api
