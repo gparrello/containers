@@ -1,0 +1,12 @@
+version: "3.9"
+
+services:
+  # web:
+  #   build: .
+  #   ports:
+  #     - "5000:5000"
+  home-assistant:
+    image: "ghcr.io/home-assistant/home-assistant:stable"
+    network_mode: host
+    environment:
+      TZ: Europe/Madrid
