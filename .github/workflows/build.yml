@@ -11,4 +11,4 @@ jobs:
         run: docker-compose up -d
       - name: Test
         # run: docker run --network container:home-assistant_ha_1 appropriate/curl -s --retry 10 --retry-connrefused http://home-assistant_ha_1:8123/api && [ $? -eq 200 -o $? -eq 201 ]
-        run: curl -s --retry 10 --retry-connrefused http://localhost:8123/api && [ $? -eq 200 -o $? -eq 201 ]
+        run: curl -s --retry 10 --retry-connrefused http://localhost:8123/ && [ $? -eq 200 -o $? -eq 201 ]
