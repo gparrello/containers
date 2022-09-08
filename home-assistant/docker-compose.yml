@@ -24,7 +24,7 @@ services:
       - 5050:5050
     volumes:
       - /etc/localtime:/etc/localtime:ro
-      - /data/docker/home-assistant/appdaemon/config:/conf
+      - /opt/home-assistant/appdaemon/conf:/conf
     depends_on:
       - homeassistant
     networks:
