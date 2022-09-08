@@ -16,7 +16,7 @@ services:
       - /etc/localtime:/etc/localtime:ro
       - /opt/home-assistant/config:/config
     network_mode: host
-    restart: always
+    restart: unless-stopped
 
   appdaemon:
     container_name: appdaemon
@@ -34,4 +34,4 @@ services:
     depends_on:
       - homeassistant
     network_mode: host
-    restart: always
+    restart: unless-stopped
