@@ -18,7 +18,7 @@ services:
     image: acockburn/appdaemon:latest
     environment:
       - HA_URL="http://homeassistant:8123"
-      - HA_KEY="$HA_TOKEN"
+      - TOKEN="$HA_TOKEN"
       - DASH_URL="http://appdaemon:5050"
     ports:
       - 5050:5050
