@@ -1,12 +1,11 @@
-version: "3.9"
-
+version: '3'
 services:
-  # web:
-  #   build: .
-  #   ports:
-  #     - "5000:5000"
-  ha:
+  homeassistant:
+    container_name: homeassistant
     image: "ghcr.io/home-assistant/home-assistant:stable"
+    volumes:
+      - /opt/home-assistant/config:/config
+      - /etc/localtime:/etc/localtime:ro
+    restart: unless-stopped
+    privileged: true
     network_mode: host
-    environment:
-      TZ: Europe/Madrid
