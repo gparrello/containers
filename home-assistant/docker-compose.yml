@@ -27,7 +27,7 @@ services:
       TOKEN: "$HA_TOKEN"
       DASH_URL: "http://appdaemon:5050"
     ports:
-      - 5050:5050
+      - 5050:8124
     volumes:
       - /etc/localtime:/etc/localtime:ro
       - /opt/home-assistant/appdaemon/conf:/conf
