@@ -13,7 +13,7 @@ services:
     volumes:
       - /opt/vpn/config:/config
     ports:
-      - 943:943
-      - 9443:9443
+      - 843:943
+      - 8443:9443
       - 1194:1194/udp
     restart: unless-stopped
