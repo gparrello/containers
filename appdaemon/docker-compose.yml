@@ -3,9 +3,7 @@ services:
   homeassistant:
     container_name: app-daemon
     image: "acockburn/appdaemon:latest"
-#    volumes:
-#      - /PATH_TO_YOUR_CONFIG:/config
-#      - /etc/localtime:/etc/localtime:ro
-#    restart: unless-stopped
-#    privileged: true
-#    network_mode: host
+    environment:
+      - HA_URL=hellosomething
+      - TOKEN=sometoken
+      - DASH_URL=someurl
