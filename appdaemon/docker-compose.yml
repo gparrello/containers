@@ -1,9 +1,0 @@
-version: '3'
-services:
-  homeassistant:
-    container_name: app-daemon
-    image: "acockburn/appdaemon:latest"
-    environment:
-      - HA_URL="http://$HOSTNAME:8123"
-      - TOKEN=sometoken
-      - DASH_URL="http://$HOSTNAME:5050"
