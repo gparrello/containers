@@ -2,7 +2,7 @@ version: '3'
 services:
   homeassistant:
     container_name: app-daemon
-    image: " acockburn/appdaemon:latest"
+    image: "acockburn/appdaemon:latest"
 #    volumes:
 #      - /PATH_TO_YOUR_CONFIG:/config
 #      - /etc/localtime:/etc/localtime:ro
