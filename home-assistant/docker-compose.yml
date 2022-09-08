@@ -15,9 +15,7 @@ services:
     volumes:
       - /etc/localtime:/etc/localtime:ro
       - /opt/home-assistant/config:/config
-    networks:
-      ha:
-        ipv4_address: 10.80.0.101
+    network_mode: host
     restart: always
 
   appdaemon:
@@ -35,17 +33,5 @@ services:
       - /opt/home-assistant/appdaemon/conf:/conf
     depends_on:
       - homeassistant
-    networks:
-      ha:
-        ipv4_address: 10.80.0.102
+    network_mode: host
     restart: always
-
-networks:
-  ha:
-    driver: macvlan
-    driver_opts:
-      parent: enp0s25
-    ipam:
-      config:
-        - subnet: 10.80.0.0/24
-          gateway: 10.80.0.1
