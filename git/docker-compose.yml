@@ -1,0 +1,95 @@
+version: "3.7"
+
+services:
+  db:
+    container_name: db
+    image: mysql:5.7
+    restart: always
+    environment:
+    - MYSQL_ROOT_PASSWORD=gitea
+    - MYSQL_USER=gitea
+    - MYSQL_PASSWORD=gitea
+    - MYSQL_DATABASE=gitea
+    networks:
+    - giteanet
+    volumes:
+    - db:/var/lib/mysql
+  gitea:
+    container_name: gitea
+    image: gitea/gitea:latest
+    environment:
+    - USER_UID=1000
+    - USER_GID=1000
+    - DB_TYPE=mysql
+    - DB_HOST=db:3306
+    - DB_NAME=gitea
+    - DB_USER=gitea
+    - DB_PASSWD=gitea
+    restart: always
+    networks:
+    - giteanet
+    volumes:
+    - gitea:/data
+    - /etc/timezone:/etc/timezone:ro
+    - /etc/localtime:/etc/localtime:ro
+    ports:
+    - "3000:3000"
+    - "222:22"
+  drone-server:
+    image: drone/drone:1.2.1
+    container_name: drone-server
+    ports:
+    - 8080:8080
+    - 9000
+    volumes:
+    - drone:/var/lib/drone/
+    restart: always
+    depends_on:
+    - gitea
+    environment:
+    - DRONE_OPEN=true
+    - DRONE_GITEA=true
+    - DRONE_NETWORK=default
+    - DRONE_DEBUG=true
+    - DRONE_ADMIN=gerardo.garcia
+    - DRONE_USER_CREATE=username:gerardo.garcia,admin:true
+    - DRONE_SERVER_PORT=:8080
+    - DRONE_DATABASE_DRIVER=mysql
+    - DRONE_DATABASE_DATASOURCE=root:gitea@tcp(db:3306)/gitea?parseTime=true
+    - DRONE_GIT_ALWAYS_AUTH=false
+    - DRONE_GITEA_SERVER=http://gitea:3000/
+    - DRONE_RPC_SECRET=0583ee2dd09648141777e6e020b9394a
+    - DRONE_SERVER_HOST=10.1.6.100:8080
+    - DRONE_HOST=http://10.1.6.100:8080
+    - DRONE_SERVER_PROTO=http
+    - DRONE_TLS_AUTOCERT=false
+    - DRONE_AGENTS_ENABLED=true
+    networks:
+    - giteanet
+  drone-agent:
+    image: drone/agent:1.2.1
+    container_name: drone-agent
+    command: agent
+    restart: always
+    depends_on:
+    - drone-server
+    volumes:
+    - /var/run/docker.sock:/var/run/docker.sock
+    - drone-agent:/data
+    environment:
+    - DRONE_RPC_SERVER=http://drone-server:8080
+    - DRONE_RPC_SECRET=0583ee2dd09648141777e6e020b9394a
+    - DRONE_RUNNER_CAPACITY=1
+    - DRONE_RUNNER_NETWORKS=giteanet
+    networks:
+    - giteanet
+
+volumes:
+  gitea: {}
+  db: {}
+  drone: {}
+  drone-agent: {}
+
+networks:
+  giteanet:
+    name: giteanet
