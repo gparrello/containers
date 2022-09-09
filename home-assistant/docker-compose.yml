@@ -18,7 +18,7 @@ services:
 
   appdaemon:
     container_name: appdaemon
-    build: .
+    image: acockburn/appdaemon:latest
     environment:
       TZ: "${TZ}"
       HA_URL: "http://homeassistant:8123"
