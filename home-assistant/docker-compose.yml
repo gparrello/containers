@@ -24,6 +24,11 @@ services:
       HA_URL: "http://homeassistant:8123"
       TOKEN: "$HA_TOKEN"
       DASH_URL: "http://appdaemon:5050"
+    healthcheck:
+      test: 'curl -m 90 -sLf http://localhost:5050 || date >> /conf/healthcheck'
+      interval: 90s
+      timeout: 60s
+      retries: 2
     volumes:
       - /etc/localtime:/etc/localtime:ro
       - /opt/home-assistant/appdaemon/conf:/conf
