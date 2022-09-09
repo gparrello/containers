@@ -36,7 +36,7 @@ services:
     - 3000:3000
     - 222:22
   drone-server:
-    image: drone/drone:1.2.1
+    image: drone/drone:latest
     container_name: drone-server
     ports:
     - 8080:8080
@@ -67,7 +67,7 @@ services:
     networks:
     - giteanet
   drone-agent:
-    image: drone/agent:1.2.1
+    image: drone/agent:latest
     container_name: drone-agent
     command: agent
     restart: always
