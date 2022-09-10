@@ -13,7 +13,7 @@ services:
       # INTERFACE: eth0 #optional
       SERVERURL: gparrello.duckdns.com #optional
       # SERVERPORT: 51820 #optional
-      PEERS: 1 #optional
+      PEERS: $PEERS #optional
       # PEERDNS: auto #optional
       INTERNAL_SUBNET: 10.80.0.0 #optional
       # ALLOWEDIPS: 0.0.0.0/0 #optional
