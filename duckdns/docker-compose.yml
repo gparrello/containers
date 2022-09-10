@@ -7,7 +7,7 @@ services:
       PUID: 1000 #optional
       PGID: 1000 #optional
       TZ: Europe/London
-      SUBDOMAINS: gparrello #,subdomain2
+      SUBDOMAINS: $SUBDOMAINS
       TOKEN: $TOKEN
       LOG_FILE: false #optional
     volumes:
