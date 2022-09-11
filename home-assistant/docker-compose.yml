@@ -15,7 +15,7 @@ services:
       - /opt/home-assistant/config:/config
     networks:
       ha:
-        - ipv4_address: 10.80.0.100
+        - ipv4_address: 10.80.0.101
     restart: unless-stopped
 
   appdaemon:
