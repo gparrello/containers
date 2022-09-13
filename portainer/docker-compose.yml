@@ -1,10 +1,20 @@
 services:
   homeassistant:
-    container_name: portainer
     image: portainer/portainer-ee:latest
+    container_name: portainer
+    restart: always
+    user: "${PUID}:${PGID}"
+    healthcheck:
+      test: 'curl -m 90 -sLf http://localhost:9443 || date >> /data/healthcheck'
+      interval: 90s
+      timeout: 60s
+      retries: 2
+    environment:
+      PUID: 1000
+      GUID: 1000
+      CONTAINER_DATA_PATH: /home/gerardo/.container-data/portainer
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
-      - /opt/portainer/data:/data
+      - "${CONTAINER_DATA_PATH}/data:/data"
     ports:
       - 9443:9443
-    restart: always
