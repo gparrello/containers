@@ -1,0 +1,28 @@
+default_config:
+
+  # Text to speech
+tts:
+  - platform: google_translate
+
+automation: !include automations.yaml
+script: !include scripts.yaml
+scene: !include scenes.yaml
+
+panel_iframe:
+  configurator:
+    title: Configurator
+    icon: mdi:wrench
+    url: http://ha-configurator>:3218/
+    require_admin: true
+  nodered:
+    title: Node-Red
+    icon: mdi:shuffle-variant
+    url: http://nodered:1880/
+    require_admin: true
+mqtt:
+  broker: mosquitto
+
+recorder:
+  db_url: mysql://homeassistant:$HA_MYSQL_PASSWORD@mariadb/ha_db?charset=utf8
+  purge_keep_days: 30
+

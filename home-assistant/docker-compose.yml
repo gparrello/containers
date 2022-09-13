@@ -1,6 +1,8 @@
 services:
   homeassistant:
-    image: homeassistant/home-assistant
+    build:
+      context: .
+      dockerfile: homeassistant.Dockerfile
     container_name: ha
     restart: unless-stopped
     user: "${PUID}:${PGID}"
@@ -53,7 +55,7 @@ services:
       MYSQL_DATABASE: ha_db
       MYSQL_USER: homeassistant
     volumes:
-      - "${CONTAINER_DATA_PATH}/home-assitant/mariadb:/config"
+      - "${CONTAINER_DATA_PATH}/home-assitant/mariadb/config:/config"
     networks:
       ha:
     ports:
@@ -83,7 +85,7 @@ services:
     depends_on:
       - homeassistant
     volumes:
-      - "${CONTAINER_DATA_PATH}/home-assistant/configurator-config:/config"
+      - "${CONTAINER_DATA_PATH}/home-assistant/configurator/config:/config"
       - "${CONTAINER_DATA_PATH}/home-assistant/home-assistant/config:/hass-config"
     networks:
       ha:
