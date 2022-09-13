@@ -99,7 +99,7 @@ services:
     environment:
       DATAPATH: config
     volumes:
-      - "${CONTAINER_DATA_PATH}/configurator/${DATAPATH}:/${DATAPATH}""
+      - "${CONTAINER_DATA_PATH}/configurator/${DATAPATH}:/${DATAPATH}"
       - "${CONTAINER_DATA_PATH}/config:/hass-config"
     networks:
       ha:
