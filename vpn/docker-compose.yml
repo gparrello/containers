@@ -5,23 +5,13 @@ services:
     cap_add:
       - NET_ADMIN
       - SYS_MODULE
-    environment:
-      PUID: 1000
-      PGID: 1000
-      TZ: Europe/London
-      # INTERFACE: eth0 #optional
-      SERVERURL: $SERVERURL #optional
-      # SERVERPORT: 51820 #optional
-      PEERS: $PEERS #optional
-      # PEERDNS: auto #optional
-      INTERNAL_SUBNET: $INTERNAL_SUBNET #optional
-      # ALLOWEDIPS: 0.0.0.0/0 #optional
-      LOG_CONFS: true #optional
+    env_file:
+      - stack.env
     volumes:
-      - /opt/vpn/config:/config
-      - /lib/modules:/lib/modules
+      - "${CONTAINER_DATA_PATH}/config:/config"
+      - "/lib/modules:/lib/modules"
     ports:
-      - 51820:51820/udp
+      - "${SERVERPORT}:${SERVERPORT}/udp"
     restart: unless-stopped
     sysctls:
       net.ipv4.conf.all.src_valid_mark: 1
