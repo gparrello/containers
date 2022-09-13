@@ -37,11 +37,9 @@ services:
       retries: 2
     env_file:
       - stack.env
-    environment:
-      DATAPATH: conf
     volumes:
       - "/etc/localtime:/etc/localtime:ro"
-      - "${CONTAINER_DATA_PATH}/appdaemon/${DATAPATH}:/${DATAPATH}"
+      - "${CONTAINER_DATA_PATH}/appdaemon/conf:/conf"
     networks:
       ha-mac:
         ipv4_address: 10.80.0.102
@@ -54,11 +52,10 @@ services:
     env_file:
       - stack.env
     environment:
-      DATAPATH: config
       MYSQL_DATABASE: ha_db
       MYSQL_USER: homeassistant
     volumes:
-      - "${CONTAINER_DATA_PATH}/mariadb/${DATAPATH}:/${DATAPATH}"
+      - "${CONTAINER_DATA_PATH}/mariadb/config:/config"
     networks:
       ha:
     ports:
@@ -71,14 +68,10 @@ services:
     user: "${PUID}:${PGID}"
     env_file:
       - stack.env
-    environment:
-      DATAPATH_1: mosquitto/config
-      DATAPATH_2: mosquitto/data
-      DATAPATH_3: mosquitto/log
     volumes:
-      - "${CONTAINER_DATA_PATH}/${DATAPATH_1}:/${DATAPATH_1}"
-      - "${CONTAINER_DATA_PATH}/${DATAPATH_2}:/${DATAPATH_2}"
-      - "${CONTAINER_DATA_PATH}/${DATAPATH_3}:/${DATAPATH_3}"
+      - "${CONTAINER_DATA_PATH}/mosquitto/config:/mosquitto/config"
+      - "${CONTAINER_DATA_PATH}/mosquitto/data:/mosquitto/data"
+      - "${CONTAINER_DATA_PATH}/mosquitto/log:/mosquitto/log"
     networks:
       ha:
     ports:
@@ -99,7 +92,7 @@ services:
     environment:
       DATAPATH: config
     volumes:
-      - "${CONTAINER_DATA_PATH}/configurator/${DATAPATH}:/${DATAPATH}"
+      - "${CONTAINER_DATA_PATH}/configurator/config:/config"
       - "${CONTAINER_DATA_PATH}/config:/hass-config"
     networks:
       ha:
@@ -120,10 +113,8 @@ services:
       retries: 2
     env_file:
       - stack.env
-    environment:
-      DATAPATH: data
     volumes:
-      - "${CONTAINER_DATA_PATH}/nodered/${DATAPATH}:/${DATAPATH}"
+      - "${CONTAINER_DATA_PATH}/nodered/data:/data"
     networks:
       ha:
     ports:
