@@ -20,6 +20,7 @@ services:
       - "/etc/localtime:/etc/localtime:ro"
       - "${CONTAINER_DATA_PATH}/home-assistant/config:/config"
     networks:
+      ha:
       ha-mac:
         ipv4_address: 10.80.0.101
 
@@ -41,6 +42,7 @@ services:
       - "/etc/localtime:/etc/localtime:ro"
       - "${CONTAINER_DATA_PATH}/appdaemon/conf:/conf"
     networks:
+      ha:
       ha-mac:
         ipv4_address: 10.80.0.102
 
@@ -49,6 +51,8 @@ services:
     container_name: ha-mariadb
     restart: unless-stopped
     user: "${PUID}:${PGID}"
+    #healthcheck:
+      #test: mysql --user=root --password=rootPass -e 'Design your own check script ' LastSchema
     env_file:
       - stack.env
     environment:
