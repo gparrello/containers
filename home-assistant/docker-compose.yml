@@ -18,7 +18,7 @@ services:
       - stack.env
     volumes:
       - "/etc/localtime:/etc/localtime:ro"
-      - "${CONTAINER_DATA_PATH}/home-assistant/home-assistant/config:/config"
+      - "${CONTAINER_DATA_PATH}/home-assistant/config:/config"
     networks:
       ha-mac:
         ipv4_address: 10.80.0.101
@@ -37,9 +37,11 @@ services:
       retries: 2
     env_file:
       - stack.env
+    environment:
+      DATAPATH: conf
     volumes:
       - "/etc/localtime:/etc/localtime:ro"
-      - "${CONTAINER_DATA_PATH}/home-assistant/appdaemon/conf:/conf"
+      - "${CONTAINER_DATA_PATH}/appdaemon/${DATAPATH}:/${DATAPATH}"
     networks:
       ha-mac:
         ipv4_address: 10.80.0.102
@@ -52,10 +54,11 @@ services:
     env_file:
       - stack.env
     environment:
+      DATAPATH: config
       MYSQL_DATABASE: ha_db
       MYSQL_USER: homeassistant
     volumes:
-      - "${CONTAINER_DATA_PATH}/home-assitant/mariadb/config:/config"
+      - "${CONTAINER_DATA_PATH}/mariadb/${DATAPATH}:/${DATAPATH}"
     networks:
       ha:
     ports:
@@ -68,10 +71,14 @@ services:
     user: "${PUID}:${PGID}"
     env_file:
       - stack.env
+    environment:
+      DATAPATH_1: mosquitto/config
+      DATAPATH_2: mosquitto/data
+      DATAPATH_3: mosquitto/log
     volumes:
-      - "${CONTAINER_DATA_PATH}/home-assistant/mosquitto/config:/mosquitto/config"
-      - "${CONTAINER_DATA_PATH}/home-assistant/mosquitto/data:/mosquitto/data"
-      - "${CONTAINER_DATA_PATH}/home-assistant/mosquitto/log:/mosquitto/log"
+      - "${CONTAINER_DATA_PATH}/${DATAPATH_1}:/${DATAPATH_1}"
+      - "${CONTAINER_DATA_PATH}/${DATAPATH_2}:/${DATAPATH_2}"
+      - "${CONTAINER_DATA_PATH}/${DATAPATH_3}:/${DATAPATH_3}"
     networks:
       ha:
     ports:
@@ -84,9 +91,16 @@ services:
     user: "${PUID}:${PGID}"
     depends_on:
       - homeassistant
+    healthcheck:
+      test: 'curl -m 90 -sLf http://localhost:3218 || date >> /config/healthcheck'
+      interval: 90s
+      timeout: 60s
+      retries: 2
+    environment:
+      DATAPATH: config
     volumes:
-      - "${CONTAINER_DATA_PATH}/home-assistant/configurator/config:/config"
-      - "${CONTAINER_DATA_PATH}/home-assistant/home-assistant/config:/hass-config"
+      - "${CONTAINER_DATA_PATH}/configurator/${DATAPATH}:/${DATAPATH}""
+      - "${CONTAINER_DATA_PATH}/config:/hass-config"
     networks:
       ha:
     ports:
@@ -99,10 +113,17 @@ services:
     depends_on:
       - homeassistant
       - mosquitto
+    healthcheck:
+      test: 'curl -m 90 -sLf http://localhost:3218 || date >> /data/healthcheck'
+      interval: 90s
+      timeout: 60s
+      retries: 2
     env_file:
       - stack.env
+    environment:
+      DATAPATH: data
     volumes:
-      - ./nodered:/data
+      - "${CONTAINER_DATA_PATH}/nodered/${DATAPATH}:/${DATAPATH}"
     networks:
       ha:
     ports:
