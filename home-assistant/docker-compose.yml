@@ -1,47 +1,114 @@
 services:
   homeassistant:
-    container_name: home-assistant
-    image: homeassistant/home-assistant:latest
-    env_file:
-      - stack.env
+    image: homeassistant/home-assistant
+    container_name: ha
+    restart: unless-stopped
+    user: "${PUID}:${PGID}"
+    depends_on:
+      - mariadb
+      - mosquitto
     healthcheck:
-      test: 'curl -m 90 -sLf http://localhost:${HA_PORT:-8123} || date >> /config/healthcheck' #| pkill -9 python3'
+      test: 'curl -m 90 -sLf http://localhost:8123 || date >> /config/healthcheck' #| pkill -9 python3'
       interval: 90s
       timeout: 60s
       retries: 2
+    env_file:
+      - stack.env
     volumes:
-      - /etc/localtime:/etc/localtime:ro
-      - $CONTAINER_DATA_PATH/home-assistant/home-assistant/config:/config
+      - "/etc/localtime:/etc/localtime:ro"
+      - "${CONTAINER_DATA_PATH}/home-assistant/home-assistant/config:/config"
     networks:
-      ha:
+      ha-mac:
         ipv4_address: 10.80.0.101
-    restart: unless-stopped
-    user: "${UID}:${GID}"
 
   appdaemon:
-    container_name: appdaemon
-    image: acockburn/appdaemon:latest
-    env_file:
-      - stack.env
+    image: acockburn/appdaemon
+    container_name: ha-appdaemon
+    restart: unless-stopped
+    user: "${PUID}:${PGID}"
+    depends_on:
+      - homeassistant
     healthcheck:
-      test: 'curl -m 90 -sLf http://localhost:${DA_PORT:-5050} || date >> /conf/healthcheck'
+      test: 'curl -m 90 -sLf http://localhost:5050 || date >> /conf/healthcheck'
       interval: 90s
       timeout: 60s
       retries: 2
+    env_file:
+      - stack.env
     volumes:
-      - /etc/localtime:/etc/localtime:ro
-      - $CONTAINER_DATA_PATH/home-assistant/appdaemon/conf:/conf
-    depends_on:
-      - homeassistant
+      - "/etc/localtime:/etc/localtime:ro"
+      - "${CONTAINER_DATA_PATH}/home-assistant/appdaemon/conf:/conf"
+    networks:
+      ha-mac:
+        ipv4_address: 10.80.0.102
+
+  mariadb:
+    image: linuxserver/mariadb
+    container_name: ha-mariadb
+    restart: unless-stopped
+    user: "${PUID}:${PGID}"
+    env_file:
+      - stack.env
+    environment:
+      MYSQL_DATABASE: ha_db
+      MYSQL_USER: homeassistant
+    volumes:
+      - "${CONTAINER_DATA_PATH}/home-assitant/mariadb:/config"
     networks:
       ha:
-        ipv4_address: 10.80.0.102
-    restart: unless-stopped
-    user: "${UID}:${GID}"
+    ports:
+      - 3306:3306
 
+  mosquitto:
+    image: eclipse-mosquitto
+    container_name: ha-mosquitto
+    restart: unless-stopped
+    user: "${PUID}:${PGID}"
+    env_file:
+      - stack.env
+    volumes:
+      - "${CONTAINER_DATA_PATH}/home-assistant/mosquitto/config:/mosquitto/config"
+      - "${CONTAINER_DATA_PATH}/home-assistant/mosquitto/data:/mosquitto/data"
+      - "${CONTAINER_DATA_PATH}/home-assistant/mosquitto/log:/mosquitto/log"
+    networks:
+      ha:
+    ports:
+      - 1883:1883
+
+  ha-configurator:
+    image: causticlab/hass-configurator-docker
+    container_name: ha-configurator
+    restart: unless-stopped
+    user: "${PUID}:${PGID}"
+    depends_on:
+      - homeassistant
+    volumes:
+      - "${CONTAINER_DATA_PATH}/home-assistant/configurator-config:/config"
+      - "${CONTAINER_DATA_PATH}/home-assistant/home-assistant/config:/hass-config"
+    networks:
+      ha:
+    ports:
+      - 3218:3218/tcp
+
+  nodered:
+    image: nodered/node-red
+    container_name: ha-nodered
+    restart: unless-stopped
+    depends_on:
+      - homeassistant
+      - mosquitto
+    env_file:
+      - stack.env
+    volumes:
+      - ./nodered:/data
+    networks:
+      ha:
+    ports:
+      - 1880:1880
 
 networks:
   ha:
+  ha-mac:
     driver: macvlan
     driver_opts:
       parent: enp0s25
