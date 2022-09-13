@@ -11,11 +11,12 @@ services:
       retries: 2
     volumes:
       - /etc/localtime:/etc/localtime:ro
-      - /opt/home-assistant/config:/config
+      - $CONTANER_DATA_PATH/home-assistant/config:/config
     networks:
       ha:
         ipv4_address: 10.80.0.101
     restart: unless-stopped
+    user: "${UID}:${GID}"
 
   appdaemon:
     container_name: appdaemon
@@ -29,13 +30,15 @@ services:
       retries: 2
     volumes:
       - /etc/localtime:/etc/localtime:ro
-      - /opt/home-assistant/appdaemon/conf:/conf
+      - $CONTANER_DATA_PATH/home-assistant/appdaemon/conf:/conf
     depends_on:
       - homeassistant
     networks:
       ha:
         ipv4_address: 10.80.0.102
     restart: unless-stopped
+    user: "${UID}:${GID}"
+
 
 networks:
   ha:
