@@ -134,4 +134,3 @@ networks:
       config:
         - subnet: 10.80.0.0/24
           gateway: 10.80.0.1
-          ip_range:
