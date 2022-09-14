@@ -47,7 +47,7 @@ class DiscoLights(hass.Hass):
                 light=light
             )
         else:
-            [(self.turn_off(l) if self.get_state(l) == 'on') for l in self.lights]
+            [self.turn_off(l) for l in self.lights]
 
     def is_enabled(self):
         if self.get_state(self.switch) == 'on':
