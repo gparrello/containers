@@ -24,7 +24,7 @@ services:
       ha-mac:
         ipv4_address: 10.80.0.101
     ports:
-      - 8123:8123
+      - 10.80.0.101:8123:8123
 
   appdaemon:
     image: acockburn/appdaemon
@@ -48,7 +48,7 @@ services:
       ha-mac:
         ipv4_address: 10.80.0.102
     ports:
-      - 5050:5050
+      - 10.80.0.102:5050:5050
 
   mariadb:
     image: linuxserver/mariadb
