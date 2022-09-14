@@ -11,7 +11,7 @@ services:
       retries: 2
     volumes:
       - /etc/localtime:/etc/localtime:ro
-      - $CONTAINER_DATA_PATH/home-assistant/home-assistant/config:/config
+      - /opt/home-assistant/config:/config
     networks:
       ha:
         ipv4_address: 10.80.0.101
@@ -29,7 +29,7 @@ services:
       retries: 2
     volumes:
       - /etc/localtime:/etc/localtime:ro
-      - $CONTAINER_DATA_PATH/home-assistant/appdaemon/conf:/conf
+      - /opt/home-assistant/appdaemon/conf:/conf
     depends_on:
       - homeassistant
     networks:
