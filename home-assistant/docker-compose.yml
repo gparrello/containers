@@ -16,7 +16,6 @@ services:
       ha:
         ipv4_address: 10.80.0.101
     restart: unless-stopped
-    user: "${UID}:${GID}"
 
   appdaemon:
     container_name: appdaemon
@@ -37,7 +36,6 @@ services:
       ha:
         ipv4_address: 10.80.0.102
     restart: unless-stopped
-    user: "${UID}:${GID}"
 
 
 networks:
