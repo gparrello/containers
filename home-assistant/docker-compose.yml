@@ -4,7 +4,7 @@ services:
     image: homeassistant/home-assistant:latest
     environment:
       - ENV=$ENV
-      - DOCKER_DATA_PATH=$STACK_DATA_PATH
+      - DOCKER_DATA_PATH=$DOCKER_DATA_PATH
       - STACK_DATA_PATH=$STACK_DATA_PATH
       - CONTAINER_DATA_PATH=home-assistant
       - PUID=$PUID
