@@ -1,132 +1,47 @@
 services:
   homeassistant:
-    build:
-      context: .
-      dockerfile: homeassistant.Dockerfile
-    container_name: ha
-    restart: unless-stopped
-    #user: "${PUID}:${PGID}"
-    depends_on:
-      - mariadb
-      - mosquitto
+    container_name: home-assistant
+    image: homeassistant/home-assistant:latest
+    env_file:
+      - stack.env
     healthcheck:
-      test: 'curl -m 90 -sLf http://localhost:8123 || date >> /config/healthcheck' #| pkill -9 python3'
+      test: 'curl -m 90 -sLf http://localhost:${HA_PORT:-8123} || date >> /config/healthcheck' #| pkill -9 python3'
       interval: 90s
       timeout: 60s
       retries: 2
-    env_file:
-      - stack.env
     volumes:
-      - "/etc/localtime:/etc/localtime:ro"
-      - "${CONTAINER_DATA_PATH}/home-assistant/config:/config"
+      - /etc/localtime:/etc/localtime:ro
+      - /opt/home-assistant/config:/config
     networks:
       ha:
-      ha-mac:
         ipv4_address: 10.80.0.101
+    restart: unless-stopped
+    user: "${UID}:${GID}"
 
   appdaemon:
-    image: acockburn/appdaemon
-    container_name: ha-appdaemon
-    restart: unless-stopped
-    #user: "${PUID}:${PGID}"
-    depends_on:
-      - homeassistant
+    container_name: appdaemon
+    image: acockburn/appdaemon:latest
+    env_file:
+      - stack.env
     healthcheck:
-      test: 'curl -m 90 -sLf http://localhost:5050 || date >> /conf/healthcheck'
+      test: 'curl -m 90 -sLf http://localhost:${DA_PORT:-5050} || date >> /conf/healthcheck'
       interval: 90s
       timeout: 60s
       retries: 2
-    env_file:
-      - stack.env
     volumes:
-      - "/etc/localtime:/etc/localtime:ro"
-      - "${CONTAINER_DATA_PATH}/appdaemon/conf:/conf"
+      - /etc/localtime:/etc/localtime:ro
+      - /opt/home-assistant/appdaemon/conf:/conf
+    depends_on:
+      - homeassistant
     networks:
       ha:
-      ha-mac:
         ipv4_address: 10.80.0.102
-
-  mariadb:
-    image: linuxserver/mariadb
-    container_name: ha-mariadb
     restart: unless-stopped
-    #user: "${PUID}:${PGID}"
-    #healthcheck:
-      #test: mysql --user=root --password=rootPass -e 'Design your own check script ' LastSchema
-    env_file:
-      - stack.env
-    environment:
-      MYSQL_DATABASE: ha_db
-      MYSQL_#user: homeassistant
-    volumes:
-      - "${CONTAINER_DATA_PATH}/mariadb/config:/config"
-    networks:
-      ha:
-    ports:
-      - 3306:3306
+    user: "${UID}:${GID}"
 
-  mosquitto:
-    image: eclipse-mosquitto
-    container_name: ha-mosquitto
-    restart: unless-stopped
-    #user: "${PUID}:${PGID}"
-    env_file:
-      - stack.env
-    volumes:
-      - "${CONTAINER_DATA_PATH}/mosquitto/config:/mosquitto/config"
-      - "${CONTAINER_DATA_PATH}/mosquitto/data:/mosquitto/data"
-      - "${CONTAINER_DATA_PATH}/mosquitto/log:/mosquitto/log"
-    networks:
-      ha:
-    ports:
-      - 1883:1883
-
-  ha-configurator:
-    image: causticlab/hass-configurator-docker
-    container_name: ha-configurator
-    restart: unless-stopped
-    #user: "${PUID}:${PGID}"
-    depends_on:
-      - homeassistant
-    healthcheck:
-      test: 'curl -m 90 -sLf http://localhost:3218 || date >> /config/healthcheck'
-      interval: 90s
-      timeout: 60s
-      retries: 2
-    environment:
-      DATAPATH: config
-    volumes:
-      - "${CONTAINER_DATA_PATH}/configurator/config:/config"
-      - "${CONTAINER_DATA_PATH}/config:/hass-config"
-    networks:
-      ha:
-    ports:
-      - 3218:3218/tcp
-
-  nodered:
-    image: nodered/node-red
-    container_name: ha-nodered
-    restart: unless-stopped
-    depends_on:
-      - homeassistant
-      - mosquitto
-    healthcheck:
-      test: 'curl -m 90 -sLf http://localhost:3218 || date >> /data/healthcheck'
-      interval: 90s
-      timeout: 60s
-      retries: 2
-    env_file:
-      - stack.env
-    volumes:
-      - "${CONTAINER_DATA_PATH}/nodered/data:/data"
-    networks:
-      ha:
-    ports:
-      - 1880:1880
 
 networks:
   ha:
-  ha-mac:
     driver: macvlan
     driver_opts:
       parent: enp0s25
