@@ -1,0 +1,10 @@
+bathroom-lights:
+  module: bathroom_lights
+  class: BathroomLights
+  door_sensor: binary_sensor.bathroom_door
+  motion_sensor: binary_sensor.bathroom_sensor
+  lights:
+    - light.luz_bano_1
+    - light.luz_bano_2
+    - light.luz_bano_3
+    - light.luz_bano_4

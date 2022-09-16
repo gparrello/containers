@@ -1,0 +1,16 @@
+disco-lights:
+  module: disco_lights
+  class: DiscoLights
+  switch: light.virtual_rgbcct
+  lights:
+    - light.luz_salon_0
+    - light.luz_salon_1
+    - light.luz_salon_2
+    - light.luz_salon_3
+    - light.luz_salon_4
+    - light.luz_salon_5
+    - light.luz_salon_6
+    - light.luz_salon_7
+    - light.luz_salon_8
+    - light.luz_salon_9
+    - light.luz_pie_salon
