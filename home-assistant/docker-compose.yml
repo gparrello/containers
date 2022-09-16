@@ -30,7 +30,7 @@ services:
       retries: 2
     volumes:
       - /etc/localtime:/etc/localtime:ro
-      - $CONTAINER_DATA_PATH/$ENV/home-assistant/appdaemon/conf:/conf
+      - $CONTAINER_DATA_PATH/$ENV/appdaemon/conf:/conf
     depends_on:
       - homeassistant
     networks:
