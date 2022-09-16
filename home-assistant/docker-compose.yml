@@ -17,7 +17,7 @@ services:
       retries: 2
     volumes:
       - /etc/localtime:/etc/localtime:ro
-      - $DOCKER_DATA_PATH/prod/home-assistant/home-assistant/config:/config
+      - $DOCKER_DATA_PATH/$ENV/$STACK_DATA_PATH/$CONTAINER_DATA_PATH/config:/config
     networks:
       ha:
         ipv4_address: 10.80.0.101
@@ -42,7 +42,7 @@ services:
       retries: 2
     volumes:
       - /etc/localtime:/etc/localtime:ro
-      - $DOCKER_DATA_PATH/prod/home-assistant/appdaemon/conf:/conf
+      - $DOCKER_DATA_PATH/$ENV/$STACK_DATA_PATH/$CONTAINER_DATA_PATH/conf:/conf
     depends_on:
       - homeassistant
     networks:
