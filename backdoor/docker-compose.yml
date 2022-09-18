@@ -9,6 +9,11 @@ services:
       - TOKEN
       - SUBDOMAINS
       - LOG_FILE
+#    healthcheck:
+#      test: "my_ip=$(curl -q ifconfig.co 2> /dev/null); IFS=, read -a subdomains <<< $SUBDOMAINS; for subdomain in \"${subdomains[@]}\"; do [ \"$my_ip\" == \"$(getent hosts $subdomain.duckdns.org | awk '{ print $1 }')\" ] || exit 1; done"
+#      interval: 90s
+#      timeout: 60s
+#      retries: 5
     volumes:
       - "${CONTAINER_DATA_PATH}/${ENV}/duckdns/config:/config"
 
