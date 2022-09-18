@@ -16,7 +16,7 @@ services:
       - $DOCKER_DATA_PATH/$ENV/home-assistant/home-assistant/config:/config
     networks:
       ha:
-        ipv4_address: 10.80.0.101
+        ipv4_address: 10.80.0.200
     restart: unless-stopped
 
   appdaemon:
@@ -39,7 +39,7 @@ services:
       - homeassistant
     networks:
       ha:
-        ipv4_address: 10.80.0.102
+        ipv4_address: 10.80.0.201
     restart: unless-stopped
 
 
