@@ -17,6 +17,8 @@ services:
     networks:
       ha:
         ipv4_address: 10.80.0.101
+    ports:
+      - 10.81.0.1:8123:8123
     restart: unless-stopped
 
   appdaemon:
