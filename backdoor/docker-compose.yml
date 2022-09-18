@@ -3,11 +3,6 @@ services:
     image: lscr.io/linuxserver/duckdns:latest
     container_name: bd-duckdns
     restart: unless-stopped
-    environment:
-      - CONTAINER_DATA_PATH
-      - TOKEN
-      - SUBDOMAINS
-      - LOG_FILE
     volumes:
       - "${CONTAINER_DATA_PATH}/duckdns/config:/config"
 
@@ -15,16 +10,6 @@ services:
     image: ghcr.io/linuxserver/wireguard
     container_name: bd-wireguard
     restart: unless-stopped
-    environment:
-      - CONTAINER_DATA_PATH
-      - PEERS
-      - PEERDNS
-      - SERVERURL
-      - SERVERPORT
-      - INTERNAL_SUBNET
-      - ALLOWEDIPS
-      - INTERFACE
-      - LOG_CONFS
     volumes:
       - "${CONTAINER_DATA_PATH}/wireguard/config:/config"
       - "/lib/modules:/lib/modules"
