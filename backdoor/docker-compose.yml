@@ -5,11 +5,12 @@ services:
     restart: unless-stopped
     environment:
       - CONTAINER_DATA_PATH
+      - ENV
       - TOKEN
       - SUBDOMAINS
       - LOG_FILE
     volumes:
-      - "${CONTAINER_DATA_PATH}/duckdns/config:/config"
+      - "${CONTAINER_DATA_PATH}/${ENV}/duckdns/config:/config"
 
   vpn:
     image: ghcr.io/linuxserver/wireguard
@@ -17,6 +18,7 @@ services:
     restart: unless-stopped
     environment:
       - CONTAINER_DATA_PATH
+      - ENV
       - PEERS
       - PEERDNS
       - SERVERURL
@@ -26,7 +28,7 @@ services:
       - INTERFACE
       - LOG_CONFS
     volumes:
-      - "${CONTAINER_DATA_PATH}/wireguard/config:/config"
+      - "${CONTAINER_DATA_PATH}/${ENV}/wireguard/config:/config"
       - "/lib/modules:/lib/modules"
     ports:
       - "${SERVERPORT}:${SERVERPORT}/udp"
