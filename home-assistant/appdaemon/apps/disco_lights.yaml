@@ -1,7 +1,7 @@
 disco-lights:
   module: disco_lights
   class: DiscoLights
-  switch: light.virtual_rgbcct
+  switch: light.disco_lights
   lights:
     - light.luz_salon_0
     - light.luz_salon_1

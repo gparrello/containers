@@ -7,21 +7,9 @@ class DiscoLights(hass.Hass):
         self.switch = self.args['switch']
         self.lights = self.args['lights']
         self.color = [255,255,255]
-        self.listen_state(self.start, self.switch, new = 'on')
-        self.listen_state(self.set_color, self.switch, attribute = 'rgb_color')
-
-    def start(self, entity, attribute, old, new, kwargs):
-        # [self.log(self.get_state(l, attribute='all')) for l in self.lights]
-        [self.turn_off(l) for l in self.lights]
-        if new == 'on':
-            for light in self.lights:
-                self.run_in(
-                    self.loop_light,
-                    delay=1,
-                    random_start=0,
-                    random_end=0,
-                    light = light
-                )
+        self.is_enabled = True
+        self.listen_state(self.set_state, self.switch, attribute='state')
+        self.listen_state(self.set_color, self.switch, attribute='rgb_color')
 
     def set_color(self, entity, attribute, old, new, kwargs):
         self.color = new
@@ -32,8 +20,8 @@ class DiscoLights(hass.Hass):
 
     def loop_light(self, kwargs):
         light = kwargs['light']
-        self.toggle(light, rgb_color=self.random_color(), brightness=255)
-        if self.is_enabled():
+        self.turn_on(light, rgb_color=self.random_color(), brightness=255)
+        if self.is_enabled:
             self.run_in(
                 self.loop_light,
                 delay=1,
@@ -44,8 +32,17 @@ class DiscoLights(hass.Hass):
         else:
             [self.turn_off(l) for l in self.lights]
 
-    def is_enabled(self):
-        if self.get_state(self.switch) == 'on':
-            return True
+    def set_state(self, entity, attribute, old, new, kwargs):
+        if new == 'on':
+            self.is_enabled = True
+            for light in self.lights:
+                self.run_in(
+                    self.loop_light,
+                    delay=1,
+                    random_start=0,
+                    random_end=0,
+                    light=light
+                )
         else:
-            return False
+            self.is_enabled = False
+            [self.turn_off(l) for l in self.lights]
