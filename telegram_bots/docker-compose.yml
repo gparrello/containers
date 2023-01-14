@@ -2,6 +2,10 @@ volumes:
   config: {}
 
 services:
+  debug-volume:
+    from: bash:latest
+    volumes:
+      - - config:/config:ro
 
   chatgpt-config-writer:
     build: ./chatgpt_config_writer
