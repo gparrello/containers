@@ -2,12 +2,6 @@ volumes:
   config: {}
 
 services:
-  debug-volume:
-    depends_on:
-      - chatgpt-config-writer
-    image: bash:latest
-    volumes:
-      - config:/config:ro
 
   chatgpt-config-writer:
     build: ./chatgpt_config_writer
