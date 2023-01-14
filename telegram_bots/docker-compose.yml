@@ -4,7 +4,9 @@ volumes:
 services:
 
   chatgpt-config-writer:
-    build: ./chatgpt_config_writer
+    build:
+      context: ./chatgpt_config_writer
+      dockerfile: ./chatgpt_config_writer/Dockerfile
     volumes:
       - config:/config
     environment:
