@@ -18,7 +18,7 @@ services:
     volumes:
       # your ".config" local folder must include a "chatgpt.json" file
       # - config/:/root/.config
-      - config:/root/.config
+      - config:/root/.config:ro
     environment:
       - TELEGRAM_ID
       - TELEGRAM_TOKEN
