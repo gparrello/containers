@@ -1,4 +1,5 @@
 FROM ubuntu:latest
-COPY script.sh /config
+WORKDIR /config
+COPY script.sh .
 
-CMD ["bash", "/config/script.sh"]
+CMD ["bash", "script.sh"]
