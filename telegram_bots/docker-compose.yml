@@ -18,7 +18,6 @@ services:
     container_name: chatgpt-telegram
     volumes:
       # your ".config" local folder must include a "chatgpt.json" file
-      # - config/:/root/.config
       - chatgpt_config_files:/root/.config:ro
     environment:
       - TELEGRAM_ID
