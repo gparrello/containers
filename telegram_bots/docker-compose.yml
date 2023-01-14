@@ -1,5 +1,5 @@
 volumes:
-  config:
+  chatgpt_config_files:
 
 services:
 
@@ -7,7 +7,7 @@ services:
     build:
       context: ./chatgpt_config_writer
     volumes:
-      - config:/config
+      - chatgpt_config_files:/config
     environment:
       - CHATGPT_AUTH_TOKEN
 
@@ -19,7 +19,7 @@ services:
     volumes:
       # your ".config" local folder must include a "chatgpt.json" file
       # - config/:/root/.config
-      - config:/root/.config:ro
+      - chatgpt_config_files:/root/.config:ro
     environment:
       - TELEGRAM_ID
       - TELEGRAM_TOKEN
