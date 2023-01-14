@@ -1,5 +1,5 @@
 FROM ubuntu:latest
 WORKDIR /config
-RUN echo "{ \"openaisession\": \"$CHATGPT_AUTH_TOKEN\" }" > chatgpt.json
+COPY script.sh .
 
-CMD ["tail", "-f", "/dev/null"]
+CMD ["bash", "script.sh"]
