@@ -1,8 +1,24 @@
+volumes:
+  config: {}
+
 services:
+
+  chatgpt-config-writer:
+    build: ./chatgpt_config_writer
+    volumes:
+      - config:/config
+    environment:
+      - CHATGPT_AUTH_TOKEN
+
   chatgpt-telegram:
-    build: .
+    depends_on:
+      - chatgpt-config-writer
+    image: ghcr.io/m1guelpf/chatgpt-telegram
     container_name: chatgpt-telegram
+    volumes:
+      # your ".config" local folder must include a "chatgpt.json" file
+      # - config/:/root/.config
+      - config:/root/.config
     environment:
       - TELEGRAM_ID
       - TELEGRAM_TOKEN
-      - CHATGPT_AUTH_TOKEN
