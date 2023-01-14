@@ -3,7 +3,9 @@ volumes:
 
 services:
   debug-volume:
-    from: bash:latest
+    depends_on:
+      - chatgpt-config-writer
+    image: bash:latest
     volumes:
       - - config:/config:ro
 
