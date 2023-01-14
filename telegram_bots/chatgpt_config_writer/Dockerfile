@@ -1,4 +1,4 @@
-FROM ubuntu:latest
+FROM bash:latest
 WORKDIR /config
 COPY script.sh .
 
