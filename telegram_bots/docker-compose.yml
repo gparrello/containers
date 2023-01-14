@@ -7,7 +7,7 @@ services:
       - chatgpt-config-writer
     image: bash:latest
     volumes:
-      - - config:/config:ro
+      - config:/config:ro
 
   chatgpt-config-writer:
     build: ./chatgpt_config_writer
