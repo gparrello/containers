@@ -1,1 +1,2 @@
+FROM scratch
 RUN echo "{ \"openaisession\": \"$CHATGPT_AUTH_TOKEN\" }" > chatgpt.json
