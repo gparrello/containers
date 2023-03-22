@@ -1,0 +1,30 @@
+services:
+  notifier:
+    image: lorcas/docker-telegram-notifier:latest
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro # for local instance
+      # - ./certs:/certs # for remote instance
+    environment:
+      - TELEGRAM_NOTIFIER_BOT_TOKEN
+      - TELEGRAM_NOTIFIER_CHAT_ID
+      # ONLY_WHITELIST: true
+      # DOCKER_HOST: tcp://example.com:2376 # http/https is detected by port number
+      # DOCKER_CERT_PATH: /certs # should contain ca.pem, cert.pem, key.pem
+    healthcheck:
+      test: curl -sS http://127.0.0.1:8545 || exit 1
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+#  example:
+#    image: hello-world
+#    labels:
+#       telegram-notifier.monitor: true  # always monitor
+#       telegram-notifier.monitor: false # never monitor
+#       # no label = monitor only when not using whitelist
+#    # example docker healthcheck
+#    healthcheck:
+#      test: curl -sS http://127.0.0.1:8545 || exit 1
+#      interval: 30s
+#      timeout: 10s
+#      retries: 3
