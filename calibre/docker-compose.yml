@@ -47,8 +47,8 @@ services:
       - PGID=1000
       - TZ=Etc/UTC
     volumes:
-      - syncthing_config:/config
-      - library:/library
+      - syncthing_config:/config:rw
+      - library:/library:rw
     ports:
       - 8384:8384
       - 22000:22000/tcp
