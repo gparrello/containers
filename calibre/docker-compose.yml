@@ -25,8 +25,6 @@ services:
     restart: unless-stopped
 
   cops:
-    depends_on:
-      - calibre
     image: lscr.io/linuxserver/cops:latest
     container_name: cops
     environment:
