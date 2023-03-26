@@ -1,7 +1,8 @@
 volumes:
+  library:
   calibre_config:
   cops_config:
-  library:
+  syncthing_config:
 
 services:
   calibre:
@@ -37,4 +38,22 @@ services:
       - library:/books:ro
     ports:
       - 80:80
+    restart: unless-stopped
+
+  syncthing:
+    image: lscr.io/linuxserver/syncthing:latest
+    container_name: syncthing
+    hostname: syncthing #optional
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Etc/UTC
+    volumes:
+      - syncthing_config:/config
+      - library:/library
+    ports:
+      - 8384:8384
+      - 22000:22000/tcp
+      - 22000:22000/udp
+      - 21027:21027/udp
     restart: unless-stopped
