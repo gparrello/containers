@@ -1,7 +1,7 @@
 volumes:
   library:
+  downloads:
   calibre_config:
-  cops_config:
   syncthing_config:
 
 services:
@@ -14,28 +14,13 @@ services:
       - PUID=1000
       - PGID=1000
       - TZ=Etc/UTC
-#      - PASSWORD= #optional
-#      - CLI_ARGS= #optional
     volumes:
       - calibre_config:/config:rw
       - library:/config/books:rw
+      - downloads:/config/downloads:ro
     ports:
       - 8080:8080
       - 8081:8081
-    restart: unless-stopped
-
-  cops:
-    image: lscr.io/linuxserver/cops:latest
-    container_name: cops
-    environment:
-      - PUID=1000
-      - PGID=1000
-      - TZ=Etc/UTC
-    volumes:
-      - cops_config:/config:rw
-      - library:/books:ro
-    ports:
-      - 80:80
     restart: unless-stopped
 
   syncthing:
@@ -49,6 +34,7 @@ services:
     volumes:
       - syncthing_config:/config:rw
       - library:/library:rw
+      - downloads:/downloads:rw
     ports:
       - 8384:8384
       - 22000:22000/tcp
