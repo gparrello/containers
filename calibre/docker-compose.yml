@@ -23,18 +23,18 @@ services:
       - 8081:8081
     restart: unless-stopped
 
-    cops:
-      requires:
-        - calibre
-      image: lscr.io/linuxserver/cops:latest
-      container_name: cops
-      environment:
-        - PUID=1000
-        - PGID=1000
-        - TZ=Etc/UTC
-      volumes:
-        - cops_config:/config
-        - library:/books
-      ports:
-        - 80:80
-      restart: unless-stopped
+  cops:
+    requires:
+      - calibre
+    image: lscr.io/linuxserver/cops:latest
+    container_name: cops
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Etc/UTC
+    volumes:
+      - cops_config:/config
+      - library:/books
+    ports:
+      - 80:80
+    restart: unless-stopped
