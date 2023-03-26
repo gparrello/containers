@@ -1,4 +1,6 @@
 volumes:
+  calibre_config:
+  cops_config:
   library:
 
 services:
@@ -11,11 +13,28 @@ services:
       - PUID=1000
       - PGID=1000
       - TZ=Etc/UTC
-      - PASSWORD= #optional
-      - CLI_ARGS= #optional
+#      - PASSWORD= #optional
+#      - CLI_ARGS= #optional
     volumes:
-      - library:/config
+      - calibre_config:/config
+      - library:/books
     ports:
       - 8080:8080
       - 8081:8081
     restart: unless-stopped
+
+    cops:
+      requires:
+        - calibre
+      image: lscr.io/linuxserver/cops:latest
+      container_name: cops
+      environment:
+        - PUID=1000
+        - PGID=1000
+        - TZ=Etc/UTC
+      volumes:
+        - cops_config:/config
+        - library:/books
+      ports:
+        - 80:80
+      restart: unless-stopped
