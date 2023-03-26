@@ -34,7 +34,7 @@ services:
       - TZ=Etc/UTC
     volumes:
       - cops_config:/config:rw
-      - library:/books:ro
+      - library:/books:rw
     ports:
       - 80:80
     restart: unless-stopped
