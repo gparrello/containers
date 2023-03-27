@@ -2,6 +2,7 @@ volumes:
   library:
   downloads:
   calibre_config:
+  calibre_web_config:
   syncthing_config:
 
 services:
@@ -21,6 +22,22 @@ services:
     ports:
       - 8080:8080
       - 8081:8081
+    restart: unless-stopped
+    
+  calibre-web:
+    image: lscr.io/linuxserver/calibre-web:latest
+    container_name: calibre-web
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Etc/UTC
+      - DOCKER_MODS=linuxserver/mods:universal-calibre #optional
+      - OAUTHLIB_RELAX_TOKEN_SCOPE=1 #optional
+    volumes:
+      - calibre_web_config:/config
+      - library:/books
+    ports:
+      - 8083:8083
     restart: unless-stopped
 
   syncthing:
