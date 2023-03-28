@@ -1,6 +1,7 @@
 volumes:
   data:
   syncthing_config:
+  rclone_config:
 
 services:
   syncthing:
@@ -19,3 +20,11 @@ services:
       - 22000:22000/udp
       - 21027:21027/udp
     restart: unless-stopped
+
+  rclone:
+    image: rclone/rclone:latest
+    container_name: rclone
+    volumes:
+      - data:/data:shared
+    user: $(id -u):$(id -g)
+
