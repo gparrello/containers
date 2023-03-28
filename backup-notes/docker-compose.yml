@@ -26,5 +26,3 @@ services:
     container_name: backup-notes-rclone
     volumes:
       - data:/data:rw
-    user: $(id -u):$(id -g)
-
