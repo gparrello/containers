@@ -15,10 +15,10 @@ services:
       - syncthing_config:/config:rw
       - data:/data:rw
     ports:
-      - 8384:8384
-      - 22000:22000/tcp
-      - 22000:22000/udp
-      - 21027:21027/udp
+      - 8385:8384
+      - 22001:22000/tcp
+      - 22001:22000/udp
+      - 21028:21027/udp
     restart: unless-stopped
 
   rclone:
