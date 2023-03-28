@@ -6,7 +6,7 @@ volumes:
 services:
   syncthing:
     image: lscr.io/linuxserver/syncthing:latest
-    container_name: syncthing
+    container_name: backup-notes-syncthing
     environment:
       - PUID=1000
       - PGID=1000
@@ -23,8 +23,8 @@ services:
 
   rclone:
     image: rclone/rclone:latest
-    container_name: rclone
+    container_name: backup-notes-rclone
     volumes:
-      - data:/data:shared
+      - data:/data:rw
     user: $(id -u):$(id -g)
 
