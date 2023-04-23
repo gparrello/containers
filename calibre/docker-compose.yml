@@ -1,0 +1,60 @@
+volumes:
+  library:
+  downloads:
+  calibre_config:
+  calibre_web_config:
+  syncthing_config:
+
+services:
+  calibre:
+    image: lscr.io/linuxserver/calibre:latest
+    container_name: calibre
+    security_opt:
+      - seccomp:unconfined #optional
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Etc/UTC
+    volumes:
+      - calibre_config:/config:rw
+      - library:/config/books:rw
+      - downloads:/config/downloads:rw
+    ports:
+      - 8080:8080
+      - 8081:8081
+    restart: unless-stopped
+    
+  calibre-web:
+    image: lscr.io/linuxserver/calibre-web:latest
+    container_name: calibre-web
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Etc/UTC
+      - DOCKER_MODS=linuxserver/mods:universal-calibre #optional
+      - OAUTHLIB_RELAX_TOKEN_SCOPE=1 #optional
+    volumes:
+      - calibre_web_config:/config
+      - library:/books
+    ports:
+      - 8083:8083
+    restart: unless-stopped
+
+  syncthing:
+    image: lscr.io/linuxserver/syncthing:latest
+    container_name: calibre-syncthing
+    hostname: syncthing #optional
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Etc/UTC
+    volumes:
+      - syncthing_config:/config:rw
+      - library:/library:rw
+      - downloads:/downloads:rw
+    ports:
+      - 8384:8384
+      - 22000:22000/tcp
+      - 22000:22000/udp
+      - 21027:21027/udp
+    restart: unless-stopped
