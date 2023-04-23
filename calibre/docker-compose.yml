@@ -42,7 +42,7 @@ services:
 
   syncthing:
     image: lscr.io/linuxserver/syncthing:latest
-    container_name: syncthing
+    container_name: calibre-syncthing
     hostname: syncthing #optional
     environment:
       - PUID=1000
