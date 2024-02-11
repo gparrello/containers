@@ -14,9 +14,7 @@ services:
     volumes:
       - /etc/localtime:/etc/localtime:ro
       - $DOCKER_DATA_PATH/$ENV/home-assistant/home-assistant/config:/config
-    networks:
-      host:
-        ipv4_address: 10.80.0.200
+    network_mode: host
     restart: unless-stopped
 
   appdaemon:
@@ -37,7 +35,5 @@ services:
       - $DOCKER_DATA_PATH/$ENV/home-assistant/appdaemon/conf:/conf
     depends_on:
       - homeassistant
-    networks:
-      host:
-        ipv4_address: 10.80.0.201
+    network_mode: host
     restart: unless-stopped
