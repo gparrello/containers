@@ -15,7 +15,7 @@ services:
       - /etc/localtime:/etc/localtime:ro
       - $DOCKER_DATA_PATH/$ENV/home-assistant/home-assistant/config:/config
     networks:
-      ha:
+      host:
         ipv4_address: 10.80.0.200
     restart: unless-stopped
 
@@ -38,11 +38,6 @@ services:
     depends_on:
       - homeassistant
     networks:
-      ha:
+      host:
         ipv4_address: 10.80.0.201
     restart: unless-stopped
-
-
-networks:
-  ha:
-    driver: host
