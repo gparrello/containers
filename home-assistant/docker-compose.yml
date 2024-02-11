@@ -45,11 +45,4 @@ services:
 
 networks:
   ha:
-    driver: ipvlan
-    driver_opts:
-      parent: enp0s25
-      ipvlan_mode: l2
-    ipam:
-      config:
-        - subnet: 10.80.0.0/24
-          gateway: 10.80.0.1
+    driver: host
