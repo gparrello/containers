@@ -9,8 +9,8 @@ services:
       - CONTAINER_DATA_PATH
     # Volumes store your data between container upgrades
     volumes:
-     - '${CONTAINER_DATA_PATH}/pihole/pihole:/etc/pihole'
-     - '${CONTAINER_DATA_PATH}/pihole/dnsmasq.d:/etc/dnsmasq.d'
+     - '${CONTAINER_DATA_PATH}/pihole:/etc/pihole'
+     - '${CONTAINER_DATA_PATH}/dnsmasq.d:/etc/dnsmasq.d'
     #   https://github.com/pi-hole/docker-pi-hole#note-on-capabilities
     cap_add:
       - NET_ADMIN # Required if you are using Pi-hole as your DHCP server, else not needed
