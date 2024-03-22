@@ -36,3 +36,26 @@ services:
     sysctls:
       net.ipv4.conf.all.src_valid_mark: 1
       net.ipv4.ip_forward: 1
+
+  vpn-ui:
+    image: ngoduykhanh/wireguard-ui:latest
+    container_name: bd-wireguard-ui
+    restart: unless-stopped
+    environment:
+      - WGUI_SESSION_SECRET
+      - WGUI_USERNAME
+      - WGUI_PASSWORD
+      - WGUI_MANAGE_START=true
+      - WGUI_MANAGE_RESTART=true
+    depends_on:
+      - vpn
+    cap_add:
+      - NET_ADMIN
+    network_mode: service:vpn
+    logging:
+      driver: json-file
+      options:
+        max-size: 50m
+    volumes:
+      - "${CONTAINER_DATA_PATH}/wireguard-ui/db:/app/db"
+      - "${CONTAINER_DATA_PATH}/wireguard/config:/config"
