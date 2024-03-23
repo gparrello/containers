@@ -1,8 +1,33 @@
+networks:
+  private_network:
+    ipam:
+      driver: default
+      config:
+        - subnet: 10.2.0.0/24
+
 services:
+
+  unbound:
+    image: mvance/unbound:latest
+    container_name: unbound
+    restart: unless-stopped
+    hostname: unbound
+    environment:
+      - CONTAINER_DATA_PATH
+    volumes:
+      - '${CONTAINER_DATA_PATH}/unbound:/opt/unbound/etc/unbound/'
+    cap_add:
+      - NET_ADMIN
+    networks:
+      private_network:
+        ipv4_address: 10.2.0.200
+
   pihole:
+    depends_on:
+      - unbound
     container_name: pihole
+    hostname: pihole
     image: pihole/pihole:latest
-    network_mode: host
     # All env vars here: https://github.com/pi-hole/docker-pi-hole/?tab=readme-ov-file#environment-variables
     environment:
       - TZ
@@ -16,3 +41,14 @@ services:
     cap_add:
       - NET_ADMIN # Required if you are using Pi-hole as your DHCP server, else not needed
     restart: unless-stopped
+    networks:
+      private_network:
+        ipv4_address: 10.2.0.100
+    dns:
+      - 127.0.0.1
+      - 10.2.0.200
+    ports:
+      - "53:53/tcp"
+      - "53:53/udp"
+      # - "67:67/udp" # Only required if you are using Pi-hole as your DHCP server
+      - "80:80/tcp"
