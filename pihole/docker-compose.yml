@@ -3,7 +3,7 @@ networks:
     ipam:
       driver: default
       config:
-        - subnet: 10.2.0.0/24
+        - subnet: 10.53.0.0/29
 
 services:
 
@@ -20,21 +20,19 @@ services:
       - NET_ADMIN
     networks:
       private_network:
-        ipv4_address: 10.2.0.200
+        ipv4_address: 10.53.0.2
 
   pihole:
     depends_on:
       - unbound
     container_name: pihole
-    hostname: pihole
     image: pihole/pihole:latest
     # All env vars here: https://github.com/pi-hole/docker-pi-hole/?tab=readme-ov-file#environment-variables
     environment:
       - TZ
       - WEBPASSWORD
       - CONTAINER_DATA_PATH
-      - PIHOLE_DNS_=10.2.0.200
-    # Volumes store your data between container upgrades
+      - PIHOLE_DNS_=10.53.0.2
     volumes:
      - '${CONTAINER_DATA_PATH}/pihole:/etc/pihole'
      - '${CONTAINER_DATA_PATH}/dnsmasq.d:/etc/dnsmasq.d'
@@ -44,10 +42,10 @@ services:
     restart: unless-stopped
     networks:
       private_network:
-        ipv4_address: 10.2.0.100
+        ipv4_address: 10.53.0.3
     dns:
       - 127.0.0.1
-      - 10.2.0.200
+      - 10.53.0.2
     ports:
       - "53:53/tcp"
       - "53:53/udp"
