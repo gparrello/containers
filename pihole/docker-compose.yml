@@ -33,6 +33,7 @@ services:
       - TZ
       - WEBPASSWORD
       - CONTAINER_DATA_PATH
+      - PIHOLE_DNS_=10.2.0.200
     # Volumes store your data between container upgrades
     volumes:
      - '${CONTAINER_DATA_PATH}/pihole:/etc/pihole'
