@@ -51,7 +51,7 @@ services:
       - vpn
     cap_add:
       - NET_ADMIN
-    network_mode: service:vpn
+    network_mode: host
     logging:
       driver: json-file
       options:
