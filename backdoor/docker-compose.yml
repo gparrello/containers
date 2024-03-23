@@ -47,6 +47,8 @@ services:
       - WGUI_PASSWORD
       - WGUI_MANAGE_START=true
       - WGUI_MANAGE_RESTART=true
+    ports:
+      - 5000:5000
     depends_on:
       - vpn
     cap_add:
