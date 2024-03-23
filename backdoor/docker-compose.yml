@@ -30,6 +30,7 @@ services:
       - "/lib/modules:/lib/modules"
     ports:
       - "${SERVERPORT}:${SERVERPORT}/udp"
+      - 5000:5000
     cap_add:
       - NET_ADMIN
       - SYS_MODULE
@@ -51,7 +52,7 @@ services:
       - vpn
     cap_add:
       - NET_ADMIN
-    network_mode: host
+    network_mode: service:vpn
     logging:
       driver: json-file
       options:
