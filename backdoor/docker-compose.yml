@@ -48,6 +48,7 @@ services:
       - WGUI_PASSWORD
       - WGUI_MANAGE_START=true
       - WGUI_MANAGE_RESTART=true
+      - WGUI_LOG_LEVEL=DEBUG
     depends_on:
       - vpn
     cap_add:
