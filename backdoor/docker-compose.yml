@@ -48,6 +48,7 @@ services:
       - WGUI_PASSWORD
       - WGUI_MANAGE_START=true
       - WGUI_MANAGE_RESTART=true
+      - WGUI_CONFIG_FILE_PATH
     depends_on:
       - vpn
     cap_add:
