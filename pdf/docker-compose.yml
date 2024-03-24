@@ -1,0 +1,13 @@
+services:
+  stirling-pdf:
+    image: frooodle/s-pdf:latest
+    ports:
+      - '9080:8080'
+    volumes:
+      - '${CONTAINER_DATA_PATH}/pdf/trainingData:/usr/share/tessdata' #Required for extra OCR languages
+      - '${CONTAINER_DATA_PATH}/pdf/extraConfigs:/configs'
+      - '${CONTAINER_DATA_PATH}/pdf/customFiles:/customFiles/'
+      - '${CONTAINER_DATA_PATH}/pdf/logs:/logs/'
+    environment:
+      - DOCKER_ENABLE_SECURITY=false
+      - INSTALL_BOOK_AND_ADVANCED_HTML_OPS=false
