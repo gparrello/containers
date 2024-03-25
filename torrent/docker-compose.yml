@@ -1,0 +1,28 @@
+services:
+  qbittorrent:
+    container_name: qbittorrent
+    image: ghcr.io/hotio/qbittorrent
+    ports:
+      - "7080:8080"
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - UMASK=002
+      - TZ=Europe/Madrid
+      - WEBUI_PORTS=8080/tcp,8080/udp
+    volumes:
+      - ./tmp/config:/config  # TODO: set proper volume
+      - ./tmp/data:/data
+
+  qbitmanage:
+    container_name: qbitmanage
+    image: ghcr.io/hotio/qbitmanage
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - UMASK=002
+      - TZ=Europe/Madrid
+      - ARGS
+    volumes:
+      - ./tmp/manage_config:/config
+      - ./tmp/data:/data
