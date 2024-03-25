@@ -16,7 +16,6 @@ services:
       - CONTAINER_DATA_PATH
     volumes:
       - '${CONTAINER_DATA_PATH}/unbound:/opt/unbound/etc/unbound/'
-      - '${PWD}/unbound.conf:/opt/unbound/etc/unbound/unbound.conf'
     cap_add:
       - NET_ADMIN
     networks:
