@@ -1,4 +1,4 @@
-# TODO: merge edge branch
+# TODO: merge edge branch and change stack to point to master
 services:
   homeassistant:
     container_name: home-assistant
