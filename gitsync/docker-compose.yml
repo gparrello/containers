@@ -1,5 +1,5 @@
 services:
-  duckdns:
+  gitsync:
     image: k8s.gcr.io/git-sync:v3.1.3
     volumes:
       - ${PWD}/tmp:/tmp  # TODO: fix permissions, right now requires chmod 777
