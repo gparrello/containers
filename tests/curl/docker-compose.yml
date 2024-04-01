@@ -1,0 +1,9 @@
+name: curl-test
+volumes:
+  tmp:
+services:
+  curl:
+    volumes:
+      - tmp:/work
+    image: curlimages/curl:latest
+    command: -d@/work/test.txt https://httpbin.org/post
