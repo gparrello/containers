@@ -4,6 +4,11 @@ volumes:
 services:
   curl:
     volumes:
-      - tmp:/work
+      - tmp:/tmp
     image: curlimages/curl:latest
-    command: -d@/work/test.txt https://httpbin.org/post
+    command: -o /tmp/unbound.conf https://raw.githubusercontent.com/gparrello/wirehole/master/unbound/unbound.conf
+  test:
+    image: busybox
+    command: tail -f /dev/null
+    volumes:
+      - tmp:/tmp
