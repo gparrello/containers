@@ -36,7 +36,7 @@ services:
     - 3000:3000
     - 222:22
   # TODO: replace all drone things with woodpecker, it's a fork of drone and free software
-  # https://github.com/woodpecker-ci/woodpecker
+  # https://github.com/woodpecker-ci/woodpecker/blob/main/docker-compose.gitpod.yaml
   drone-server:
     image: drone/drone:latest
     container_name: drone-server
