@@ -1,4 +1,6 @@
 services:
+  # TODO: Change to postgresql
+  # https://docs.gitea.com/installation/install-with-docker-rootless#postgresql-database
   db:
     container_name: db
     image: mysql:5.7
