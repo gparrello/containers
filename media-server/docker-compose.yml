@@ -2,7 +2,6 @@
 volumes:
   config:
   cache:
-  media:
 
 services:
   jellyfin:
@@ -14,7 +13,7 @@ services:
     volumes:
       - config:/config
       - cache:/cache
-      - media:/media:ro
+      - /home/gerardo/Videos:/media:ro
     restart: 'unless-stopped'
     # Optional - alternative address used for autodiscovery
     # environment:
