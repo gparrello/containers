@@ -6,6 +6,7 @@ volumes:
   jellyseerr:
   radarr:
   sonarr:
+  prowlarr:
 
 services:
   jellyfin:
@@ -68,3 +69,16 @@ services:
     volumes:
       - radarr:/config
       - media:/data
+    
+  prowlarr:
+    container_name: prowlarr
+    image: ghcr.io/hotio/prowlarr
+    ports:
+      - "9696:9696"
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - UMASK=002
+      - TZ=Europe/Madrid
+    volumes:
+      - prowlarr:/config
