@@ -92,7 +92,7 @@ services:
       - PUID=1000
       - PGID=1000
       - UMASK=002
-      - TZ=Etc/UTC
+      - TZ=Europe/Madrid
       - WEBUI_PORTS=6767/tcp,6767/udp
     volumes:
       - bazarr:/config
