@@ -2,6 +2,7 @@
 volumes:
   config:
   cache:
+  jellyseerr:
 
 services:
   jellyfin:
@@ -21,3 +22,16 @@ services:
     # Optional - may be necessary for docker healthcheck to pass if running in host network mode
     extra_hosts:
       - 'host.docker.internal:host-gateway'
+
+  jellyseerr:
+    image: fallenbagel/jellyseerr:latest
+    container_name: jellyseerr
+    environment:
+      # - LOG_LEVEL=debug
+      - TZ=Europe/Madrid
+      # - PORT=5055 #optional
+    ports:
+      - '8097:5055'
+    volumes:
+      - jellyseerr:/app/config
+    restart: unless-stopped
