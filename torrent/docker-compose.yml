@@ -1,3 +1,7 @@
+volumes:
+  qbittorrent:
+  qbitmanage:
+
 services:
   qbittorrent:
     container_name: qbittorrent
@@ -11,8 +15,8 @@ services:
       - TZ=Europe/Madrid
       - WEBUI_PORTS=8080/tcp,8080/udp
     volumes:
-      - "${CONTAINER_DATA_PATH}/qbittorrent/config:/config"
-      - "${CONTAINER_DATA_PATH}/qbittorrent/data:/data"  # TODO: requires change of ownership to UID:GID
+      - qbittorrent:/config
+      - /data:/data  # TODO: requires change of ownership to UID:GID
 
   qbitmanage:
     container_name: qbitmanage
@@ -24,5 +28,5 @@ services:
       - TZ=Europe/Madrid
       - ARGS
     volumes:
-      - "${CONTAINER_DATA_PATH}/qbitmanage/config:/config"
-      - "${CONTAINER_DATA_PATH}/qbittorrent/data:/data"
+      - qbitmanage:/config
+      - /data:/data
