@@ -1,6 +1,6 @@
 volumes:
   qbittorrent:
-  qbitmanage:
+  # qbitmanage:
 
 services:
   qbittorrent:
