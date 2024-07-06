@@ -59,3 +59,17 @@ services:
       - 22000:22000/udp
       - 21027:21027/udp
     restart: unless-stopped
+
+  # readarr:
+  #   container_name: readarr
+  #   image: ghcr.io/hotio/readarr
+  #   ports:
+  #     - "8787:8787"
+  #   environment:
+  #     - PUID=1000
+  #     - PGID=1000
+  #     - UMASK=002
+  #     - TZ=Etc/UTC
+  #   volumes:
+  #     - /<host_folder_config>:/config
+  #     - /<host_folder_data>:/data
