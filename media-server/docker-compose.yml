@@ -18,6 +18,7 @@ services:
       - jellyfin:/config
       - cache:/cache
       - media:/media:ro
+    environment:
       - TZ=Europe/Madrid
     restart: 'unless-stopped'
     # Optional - alternative address used for autodiscovery
