@@ -1,6 +1,5 @@
 ---
 volumes:
-  media:
   cache:
   jellyfin:
   jellyseerr:
@@ -18,7 +17,7 @@ services:
     volumes:
       - jellyfin:/config
       - cache:/cache
-      - media:/media:ro
+      - /data:/media:ro
     environment:
       - TZ=Europe/Madrid
     restart: 'unless-stopped'
@@ -54,7 +53,7 @@ services:
       - TZ=Europe/Madrid
     volumes:
       - sonarr:/config
-      - media:/data
+      - /data:/data
 
   radarr:
     container_name: radarr
@@ -68,7 +67,7 @@ services:
       - TZ=Europe/Madrid
     volumes:
       - radarr:/config
-      - media:/data
+      - /data:/data
     
   prowlarr:
     container_name: prowlarr
