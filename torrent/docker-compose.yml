@@ -18,15 +18,15 @@ services:
       - qbittorrent:/config
       - /data:/data  # TODO: requires change of ownership to UID:GID
 
-  qbitmanage:
-    container_name: qbitmanage
-    image: ghcr.io/hotio/qbitmanage
-    environment:
-      - PUID=1000
-      - PGID=1000
-      - UMASK=002
-      - TZ=Europe/Madrid
-      - ARGS
-    volumes:
-      - qbitmanage:/config
-      - /data:/data
+  # qbitmanage:
+  #   container_name: qbitmanage
+  #   image: ghcr.io/hotio/qbitmanage
+  #   environment:
+  #     - PUID=1000
+  #     - PGID=1000
+  #     - UMASK=002
+  #     - TZ=Europe/Madrid
+  #     - ARGS
+  #   volumes:
+  #     - qbitmanage:/config
+  #     - /data:/data
