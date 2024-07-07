@@ -52,4 +52,4 @@ services:
       - TZ=Europe/Madrid
     volumes:
       - readarr_config:/config
-      - /data/books:/data
+      - /data:/data
