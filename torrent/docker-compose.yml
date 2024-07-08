@@ -4,6 +4,7 @@ volumes:
 
 services:
   qbittorrent:
+    restart: unless-stopped
     container_name: qbittorrent
     image: ghcr.io/hotio/qbittorrent
     ports:

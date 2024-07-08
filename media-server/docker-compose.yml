@@ -43,6 +43,7 @@ services:
     restart: unless-stopped
 
   sonarr:
+    restart: unless-stopped
     container_name: sonarr
     image: ghcr.io/hotio/sonarr
     ports:
@@ -57,6 +58,7 @@ services:
       - /data:/data
 
   radarr:
+    restart: unless-stopped
     container_name: radarr
     image: ghcr.io/hotio/radarr
     ports:
@@ -71,6 +73,7 @@ services:
       - /data:/data
     
   prowlarr:
+    restart: unless-stopped
     container_name: prowlarr
     image: ghcr.io/hotio/prowlarr
     ports:
@@ -84,6 +87,7 @@ services:
       - prowlarr:/config
 
   bazarr:
+    restart: unless-stopped
     container_name: bazarr
     image: ghcr.io/hotio/bazarr
     ports:
