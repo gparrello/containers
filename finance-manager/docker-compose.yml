@@ -1,10 +1,18 @@
 version: '3.3'
 
+#
+# The Firefly III Data Importer will ask you for the Firefly III URL and a "Client ID".
+# You can generate the Client ID at http://localhost/profile (after registering)
+# The Firefly III URL is: http://app:8080
+#
+# Other URL's will give 500 | Server Error
+#
+
 services:
   app:
     image: fireflyiii/core:latest
     hostname: app
-    container_name: firefly
+    container_name: firefly_core
     restart: unless-stopped
     volumes:
       - upload:/var/www/html/storage/upload
@@ -25,6 +33,20 @@ services:
       - firefly
     volumes:
       - db:/var/lib/mysql
+
+  importer:
+    image: fireflyiii/data-importer:latest
+    hostname: importer
+    restart: unless-stopped
+    container_name: firefly_importer
+    networks:
+      - firefly
+    ports:
+      - '10001:8080'
+    depends_on:
+      - app
+    env_file: .importer.env
+
   cron:
     #
     # To make this work, set STATIC_CRON_TOKEN in your .env file or as an environment variable and replace REPLACEME below
