@@ -12,4 +12,4 @@ services:
       - '$CONTAINER_DATA_PATH/homarr/icons:/app/public/icons'
       - '$CONTAINER_DATA_PATH/homarr/data:/data'
     ports:
-      - '80:7575'
+      - 7575:7575
