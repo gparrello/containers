@@ -54,6 +54,7 @@ services:
       - "5380:80/tcp"
 
   reverse_proxy:
+    container_name: reverse_proxy
     build: .
     restart: unless-stopped
     networks:
