@@ -57,6 +57,8 @@ services:
     container_name: reverse_proxy
     build: .
     restart: unless-stopped
+    ports:
+      - 80:80
     networks:
       private_network:
         ipv4_address: 10.53.0.4
