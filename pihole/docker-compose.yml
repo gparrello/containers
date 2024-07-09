@@ -52,3 +52,10 @@ services:
       - "53:53/udp"
       # - "67:67/udp" # Only required if you are using Pi-hole as your DHCP server
       - "5380:80/tcp"
+
+  reverse_proxy:
+    build: .
+    restart: unless-stopped
+    networks:
+      private_network:
+        ipv4_address: 10.53.0.4
