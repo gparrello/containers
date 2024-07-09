@@ -1,7 +1,7 @@
 services:
   duckdns:
     image: lscr.io/linuxserver/duckdns:latest
-    container_name: bd-duckdns
+    container_name: duckdns
     restart: unless-stopped
     environment:
       - CONTAINER_DATA_PATH
@@ -13,7 +13,7 @@ services:
 
   vpn:
     image: ghcr.io/linuxserver/wireguard
-    container_name: bd-wireguard
+    container_name: wireguard
     restart: unless-stopped
     environment:
       - CONTAINER_DATA_PATH
@@ -40,7 +40,7 @@ services:
 
   vpn-ui:  # TODO: fix configs now coming from UI
     image: ngoduykhanh/wireguard-ui:latest
-    container_name: bd-wireguard-ui
+    container_name: wireguard-ui
     restart: unless-stopped
     environment:
       - WGUI_SESSION_SECRET
