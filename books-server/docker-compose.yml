@@ -66,11 +66,13 @@ services:
       - TZ=Europe/Madrid
       - PUID=1000
       - PGID=1000
+      - PERMISSIONS_FOLDER=755
+      - PERMISSIONS_FILE=644
       - TG_AUTHORIZED_USER_ID
       - TG_API_ID
       - TG_API_HASH
       - TG_BOT_TOKEN
     volumes:
       - telethon_config:/config
-      - downloads:/download
+      - downloads:/download/completed_books
       # - /path/to/download/torrent/watch:/watch
