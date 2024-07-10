@@ -57,6 +57,7 @@ services:
   reverse_proxy:
     container_name: reverse_proxy
     build: .  # TODO: to disable after relative path volumes in portainer
+    pull_policy: build
     # image: nginx:latest  # # TODO: to enable with relative path volumes in portainer
     restart: unless-stopped
     environment:
