@@ -4,6 +4,7 @@ volumes:
   calibre_config:
   calibre_web_config:
   readarr_config:
+  telethon_config:
 
 services:
   calibre:
@@ -55,3 +56,21 @@ services:
     volumes:
       - readarr_config:/config
       - /data:/data
+  
+  telethon_downloader:
+    image: jsavargas/telethon_downloader
+    container_name: telethon-downloader
+    restart: unless-stopped
+    network_mode: host
+    environment:
+      - TZ=Europe/Madrid
+      - PUID=1000
+      - PGID=1000
+      - TG_AUTHORIZED_USER_ID
+      - TG_API_ID
+      - TG_API_HASH
+      - TG_BOT_TOKEN
+    volumes:
+      - telethon_config:/config
+      - /downloads:/download
+      # - /path/to/download/torrent/watch:/watch
