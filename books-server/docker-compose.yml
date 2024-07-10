@@ -57,6 +57,7 @@ services:
       - readarr_config:/config
       - /data:/data
   
+  # https://github.com/jsavargas/telethon_downloader
   telethon_downloader:
     image: jsavargas/telethon_downloader
     container_name: telethon-downloader
