@@ -72,5 +72,5 @@ services:
       - TG_BOT_TOKEN
     volumes:
       - telethon_config:/config
-      - /downloads:/download
+      - downloads:/download
       # - /path/to/download/torrent/watch:/watch
