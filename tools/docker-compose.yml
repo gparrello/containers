@@ -1,0 +1,25 @@
+services:
+  it-tools:
+    image: 'ghcr.io/corentinth/it-tools:latest'
+    ports:
+      - '17700:80'
+    restart: unless-stopped
+    container_name: it-tools
+
+  stirling-pdf:
+    restart: unless-stopped
+    image: frooodle/s-pdf:latest
+    ports:
+      - '17701:8080'
+    volumes:
+      - stirling-pdf-training:/usr/share/tessdata #Required for extra OCR languages
+      - stirling-pdf-extra:/configs
+      - stirling-pdf-custom:/customFiles/
+    environment:
+      - DOCKER_ENABLE_SECURITY=true
+      - INSTALL_BOOK_AND_ADVANCED_HTML_OPS=true
+
+volumes:
+  stirling-pdf-training:
+  stirling-pdf-extra:
+  stirling-pdf-custom:
