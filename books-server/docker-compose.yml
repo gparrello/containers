@@ -16,6 +16,8 @@ services:
       - PUID=1000
       - PGID=1000
       - TZ=Europe/Madrid
+      - TITLE=Calibre
+      - SUBFOLDER=/calibre/
     volumes:
       - calibre_config:/config
       # - /data/books/library:/config/books
