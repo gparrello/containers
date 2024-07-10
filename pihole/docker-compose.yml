@@ -13,6 +13,7 @@ services:
     restart: unless-stopped
     hostname: unbound
     environment:
+      - TZ=Europe/Madrid
       - CONTAINER_DATA_PATH
     volumes:
       - '${CONTAINER_DATA_PATH}/unbound:/opt/unbound/etc/unbound/'
@@ -30,7 +31,7 @@ services:
     image: pihole/pihole:latest
     # All env vars here: https://github.com/pi-hole/docker-pi-hole/?tab=readme-ov-file#environment-variables
     environment:
-      - TZ
+      - TZ=Europe/Madrid
       - WEBPASSWORD
       - CONTAINER_DATA_PATH
       - PIHOLE_DNS_=10.53.0.2
@@ -57,6 +58,8 @@ services:
     container_name: reverse_proxy
     image: nginx:latest
     restart: unless-stopped
+    environment:
+      - TZ=Europe/Madrid
     ports:
       - 80:80
     networks:
