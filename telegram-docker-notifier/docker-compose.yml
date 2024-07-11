@@ -1,5 +1,7 @@
 services:
   notifier:
+    dns:
+      - 10.80.0.2
     restart: unless-stopped
     image: lorcas/docker-telegram-notifier:latest
     volumes:
