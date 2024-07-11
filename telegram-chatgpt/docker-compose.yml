@@ -10,6 +10,8 @@ services:
       - chatgpt_config_files:/config
     environment:
       - CHATGPT_AUTH_TOKEN
+    dns:
+      - 10.80.0.2
 
   chatgpt-telegram:
     depends_on:
@@ -24,3 +26,5 @@ services:
       - TELEGRAM_TOKEN
     labels:
        - "com.centurylinklabs.watchtower.enable=false"
+    dns:
+      - 10.80.0.2

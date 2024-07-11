@@ -14,3 +14,5 @@ services:
     - WATCHTOWER_LIFECYCLE_HOOKS=True
     - WATCHTOWER_NOTIFICATIONS=shoutrrr
     - WATCHTOWER_NOTIFICATION_URL
+    dns:
+      - 10.80.0.2

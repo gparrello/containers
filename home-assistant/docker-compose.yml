@@ -17,6 +17,8 @@ services:
       - $DOCKER_DATA_PATH/$ENV/home-assistant/home-assistant/config:/config
     network_mode: host
     restart: unless-stopped
+    dns:
+      - 10.80.0.2
 
   appdaemon:
     container_name: appdaemon
@@ -38,3 +40,5 @@ services:
       - homeassistant
     network_mode: host
     restart: unless-stopped
+    dns:
+      - 10.80.0.2

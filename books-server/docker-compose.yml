@@ -25,6 +25,8 @@ services:
       - 8080:8080
       - 8081:8081
     restart: unless-stopped
+    dns:
+      - 10.80.0.2
     
   calibre-web:
     image: lscr.io/linuxserver/calibre-web:latest
@@ -41,6 +43,8 @@ services:
     ports:
       - 8083:8083
     restart: unless-stopped
+    dns:
+      - 10.80.0.2
 
   readarr:
     restart: unless-stopped
@@ -56,6 +60,8 @@ services:
     volumes:
       - readarr_config:/config
       - /data:/data
+    dns:
+      - 10.80.0.2
   
   # https://github.com/jsavargas/telethon_downloader
   telethon_downloader:
@@ -77,3 +83,5 @@ services:
       - telethon_config:/config
       - downloads:/download
       # - /path/to/download/torrent/watch:/watch
+    dns:
+      - 10.80.0.2

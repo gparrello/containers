@@ -37,6 +37,8 @@ services:
     sysctls:
       net.ipv4.conf.all.src_valid_mark: 1
       net.ipv4.ip_forward: 1
+    dns:
+      - 10.80.0.2
 
   vpn-ui:  # TODO: fix configs now coming from UI
     image: ngoduykhanh/wireguard-ui:latest
@@ -61,3 +63,5 @@ services:
     volumes:
       - "${CONTAINER_DATA_PATH}/wireguard-ui/db:/app/db"
       - "${CONTAINER_DATA_PATH}/wireguard/config:/config"
+    dns:
+      - 10.80.0.2

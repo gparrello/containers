@@ -13,3 +13,5 @@ services:
       - '$CONTAINER_DATA_PATH/homarr/data:/data'
     ports:
       - 7575:7575
+    dns:
+      - 10.80.0.2
