@@ -18,7 +18,7 @@ services:
       volumes:
         - prowlarr:/config
       dns:
-        - 10.80.0.2      
+        - 10.80.0.2
 
   qbittorrent:
     restart: unless-stopped
