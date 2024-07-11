@@ -25,6 +25,8 @@ services:
     # environment:
       # - JELLYFIN_PublishedServerUrl=http://${HOST}
     # Optional - may be necessary for docker healthcheck to pass if running in host network mode
+    dns:
+      - 10.80.0.2
     extra_hosts:
       - 'host.docker.internal:host-gateway'
 
@@ -39,6 +41,8 @@ services:
       - '8097:5055'
     volumes:
       - jellyseerr:/app/config
+    dns:
+      - 10.80.0.2
     restart: unless-stopped
 
   sonarr:
@@ -55,6 +59,8 @@ services:
     volumes:
       - sonarr:/config
       - /data:/data
+    dns:
+      - 10.80.0.2
 
   radarr:
     restart: unless-stopped
@@ -70,6 +76,8 @@ services:
     volumes:
       - radarr:/config
       - /data:/data
+    dns:
+      - 10.80.0.2
     
   bazarr:
     restart: unless-stopped
@@ -86,3 +94,5 @@ services:
     volumes:
       - bazarr:/config
       - /data:/data
+    dns:
+      - 10.80.0.2
