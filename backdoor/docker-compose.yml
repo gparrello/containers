@@ -63,5 +63,3 @@ services:
     volumes:
       - "${CONTAINER_DATA_PATH}/wireguard-ui/db:/app/db"
       - "${CONTAINER_DATA_PATH}/wireguard/config:/config"
-    dns:
-      - 10.80.0.2
