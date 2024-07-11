@@ -8,4 +8,5 @@ services:
       - 9999:8080
     dns:
       - 10.80.0.2
+    restart: unless-stopped
     
