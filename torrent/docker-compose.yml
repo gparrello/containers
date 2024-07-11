@@ -19,6 +19,11 @@ services:
         - prowlarr:/config
       dns:
         - 10.80.0.2
+      healthcheck:
+        test: curl -sS http://127.0.0.1:9696 || exit 1
+        interval: 30s
+        timeout: 10s
+        retries: 3
 
   qbittorrent:
     restart: unless-stopped
@@ -37,6 +42,11 @@ services:
       - /data:/data  # TODO: requires change of ownership to UID:GID
     dns:
         - 10.80.0.2
+    healthcheck:
+      test: curl -sS http://127.0.0.1:8080 || exit 1
+      interval: 30s
+      timeout: 10s
+      retries: 3
 
   # qbitmanage:
   #   container_name: qbitmanage
