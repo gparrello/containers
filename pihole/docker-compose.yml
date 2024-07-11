@@ -69,3 +69,5 @@ services:
         ipv4_address: 10.53.0.4
     # volumes:  # TODO: to enable with relative path volumes in portainer
     #   - ./nginx.conf:/etc/nginx/conf.d/default.conf
+    labels:
+       - "com.centurylinklabs.watchtower.enable=false"
