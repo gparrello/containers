@@ -13,7 +13,7 @@ services:
     dns:
       - 10.80.0.2
     labels:
-       - "com.centurylinklabs.watchtower.enable=false"
+      - "com.centurylinklabs.watchtower.enable=false"
 
   chatgpt-telegram:
     depends_on:
@@ -29,4 +29,4 @@ services:
     dns:
       - 10.80.0.2
     labels:
-       - "com.centurylinklabs.watchtower.enable=false"
+      - "com.centurylinklabs.watchtower.enable=false"
