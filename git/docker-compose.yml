@@ -11,9 +11,12 @@ services:
       MYSQL_PASSWORD: gitea
       MYSQL_DATABASE: gitea
     networks:
-    - giteanet
+      - giteanet
     volumes:
-    - db:/var/lib/mysql
+      - db:/var/lib/mysql
+    dns:
+      - 10.80.0.2
+
   gitea:
     container_name: gitea
     image: gitea/gitea:latest
@@ -27,27 +30,30 @@ services:
       DB_PASSWD: gitea
     restart: always
     networks:
-    - giteanet
+      - giteanet
     volumes:
-    - gitea:/data
-    - /etc/timezone:/etc/timezone:ro
-    - /etc/localtime:/etc/localtime:ro
+      - gitea:/data
+      - /etc/timezone:/etc/timezone:ro
+      - /etc/localtime:/etc/localtime:ro
     ports:
-    - 3000:3000
-    - 222:22
+      - 3000:3000
+      - 222:22
   # TODO: replace all drone things with woodpecker, it's a fork of drone and free software
   # https://github.com/woodpecker-ci/woodpecker/blob/main/docker-compose.gitpod.yaml
+    dns:
+      - 10.80.0.2
+
   drone-server:
     image: drone/drone:latest
     container_name: drone-server
     ports:
-    - 8080:8080
-    - 9000
+      - 8080:8080
+      - 9000
     volumes:
-    - drone:/var/lib/drone/
+      - drone:/var/lib/drone/
     restart: always
     depends_on:
-    - gitea
+      - gitea
     environment:
       DRONE_OPEN: true
       DRONE_GITEA: true
@@ -67,24 +73,29 @@ services:
       DRONE_TLS_AUTOCERT: false
       DRONE_AGENTS_ENABLED: true
     networks:
-    - giteanet
+      - giteanet
+    dns:
+      - 10.80.0.2
+
   drone-agent:
     image: drone/agent:latest
     container_name: drone-agent
     command: agent
     restart: always
     depends_on:
-    - drone-server
+      - drone-server
     volumes:
-    - /var/run/docker.sock:/var/run/docker.sock
-    - drone-agent:/data
+      - /var/run/docker.sock:/var/run/docker.sock
+      - drone-agent:/data
     environment:
       DRONE_RPC_SERVER: http://drone-server:8080
       DRONE_RPC_SECRET: $RPC_SECRET
       DRONE_RUNNER_CAPACITY: 1
       DRONE_RUNNER_NETWORKS: giteanet
     networks:
-    - giteanet
+      - giteanet
+    dns:
+      - 10.80.0.2
 
 volumes:
   gitea: {}
