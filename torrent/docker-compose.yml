@@ -17,6 +17,8 @@ services:
         - TZ=Europe/Madrid
       volumes:
         - prowlarr:/config
+      dns:
+        - 10.80.0.2      
 
   qbittorrent:
     restart: unless-stopped
@@ -33,6 +35,8 @@ services:
     volumes:
       - qbittorrent:/config
       - /data:/data  # TODO: requires change of ownership to UID:GID
+    dns:
+        - 10.80.0.2
 
   # qbitmanage:
   #   container_name: qbitmanage
