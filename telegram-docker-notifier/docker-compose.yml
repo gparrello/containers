@@ -1,5 +1,6 @@
 services:
   notifier:
+    restart: unless-stopped
     image: lorcas/docker-telegram-notifier:latest
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro # for local instance
