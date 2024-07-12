@@ -29,6 +29,11 @@ services:
       - firefly
     volumes:
       - db:/var/lib/mysql
+    healthcheck:
+      test: curl -sS http://127.0.0.1:8080 || exit 1
+      interval: 30s
+      timeout: 10s
+      retries: 3
 
   importer:
     image: fireflyiii/data-importer:latest
@@ -40,6 +45,11 @@ services:
     depends_on:
       - app
     env_file: .importer.env
+    healthcheck:
+      test: curl -sS http://127.0.0.1:8080 || exit 1
+      interval: 30s
+      timeout: 10s
+      retries: 3
 
   cron:
     #
