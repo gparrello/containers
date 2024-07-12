@@ -29,6 +29,11 @@ services:
       - 10.80.0.2
     extra_hosts:
       - 'host.docker.internal:host-gateway'
+    healthcheck:
+      test: curl -sS http://127.0.0.1:8096 || exit 1
+      interval: 30s
+      timeout: 10s
+      retries: 3
 
   jellyseerr:
     image: fallenbagel/jellyseerr:latest
@@ -44,6 +49,11 @@ services:
     dns:
       - 10.80.0.2
     restart: unless-stopped
+    healthcheck:
+      test: curl -sS http://127.0.0.1:5055 || exit 1
+      interval: 30s
+      timeout: 10s
+      retries: 3
 
   sonarr:
     restart: unless-stopped
@@ -61,6 +71,11 @@ services:
       - /data:/data
     dns:
       - 10.80.0.2
+    healthcheck:
+      test: curl -sS http://127.0.0.1:8989 || exit 1
+      interval: 30s
+      timeout: 10s
+      retries: 3
 
   radarr:
     restart: unless-stopped
@@ -78,6 +93,11 @@ services:
       - /data:/data
     dns:
       - 10.80.0.2
+    healthcheck:
+      test: curl -sS http://127.0.0.1:7878 || exit 1
+      interval: 30s
+      timeout: 10s
+      retries: 3
     
   bazarr:
     restart: unless-stopped
@@ -96,3 +116,8 @@ services:
       - /data:/data
     dns:
       - 10.80.0.2
+    healthcheck:
+      test: curl -sS http://127.0.0.1:6767 || exit 1
+      interval: 30s
+      timeout: 10s
+      retries: 3
