@@ -15,8 +15,8 @@ services:
       - 7575:7575
     dns:
       - 10.80.0.2
-    healthcheck:
-      test: curl -sS http://127.0.0.1:7575 || exit 1
-      interval: 30s
-      timeout: 10s
-      retries: 3
+    # healthcheck:
+    #   test: curl -sS http://127.0.0.1:7575 || exit 1
+    #   interval: 30s
+    #   timeout: 10s
+    #   retries: 3
