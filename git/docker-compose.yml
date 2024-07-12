@@ -1,108 +1,85 @@
 services:
-  # TODO: Change to postgresql
-  # https://docs.gitea.com/installation/install-with-docker-rootless#postgresql-database
   db:
+    image: postgres:13
     container_name: db
-    image: mysql:5.7
-    restart: always
     environment:
-      MYSQL_ROOT_PASSWORD: gitea
-      MYSQL_USER: gitea
-      MYSQL_PASSWORD: gitea
-      MYSQL_DATABASE: gitea
-    networks:
-      - giteanet
+      - POSTGRES_DB=gitea
+      - POSTGRES_USER
+      - POSTGRES_PASSWORD
     volumes:
-      - db:/var/lib/mysql
+      - db:/var/lib/postgresql/data
+    networks:
+      - gitea-net   
     dns:
       - 10.80.0.2
 
   gitea:
-    container_name: gitea
     image: gitea/gitea:latest
+    container_name: gitea
     environment:
-      USER_UID: 1000
-      USER_GID: 1000
-      DB_TYPE: mysql
-      DB_HOST: db:3306
-      DB_NAME: gitea
-      DB_USER: gitea
-      DB_PASSWD: gitea
-    restart: always
-    networks:
-      - giteanet
+      - USER_UID=1000
+      - USER_GID=1000
+      - DB_TYPE=postgres
+      - DB_HOST=db:5432
+      - DB_NAME=gitea
+      - DB_USER=$POSTGRES_USER
+      - DB_PASSWD=$POSTGRES_PASSWORD
     volumes:
       - gitea:/data
-      - /etc/timezone:/etc/timezone:ro
-      - /etc/localtime:/etc/localtime:ro
     ports:
-      - 3000:3000
-      - 222:22
+      - "3000:3000"
+      - "3022:22"
+    depends_on:
+      - db
+    networks:
+      - gitea-net
     dns:
       - 10.80.0.2
 
-  # TODO: replace all drone things with woodpecker, it's a fork of drone and free software
-  # https://github.com/woodpecker-ci/woodpecker/blob/main/docker-compose.gitpod.yaml
-  drone-server:
-    image: drone/drone:latest
-    container_name: drone-server
-    ports:
-      - 8080:8080
-      - 9000
+  woodpecker-server:
+    image: woodpeckerci/woodpecker-server:latest
+    container_name: woodpecker-server
+    environment:
+      - WOODPECKER_OPEN=true
+      - WOODPECKER_GITEA=true
+      - WOODPECKER_GITEA_URL=http://gitea:3000
+      - WOODPECKER_GITEA_CLIENT
+      - WOODPECKER_GITEA_SECRET
+      - WOODPECKER_AGENT_SECRET
+      - WOODPECKER_SERVER_ADDR=:8000
+      - WOODPECKER_DATABASE_DRIVER=sqlite3
+      - WOODPECKER_DATABASE_DATASOURCE=/var/lib/woodpecker/woodpecker.sqlite
     volumes:
-      - drone:/var/lib/drone/
-    restart: always
+      - woodpecker:/var/lib/woodpecker
+    ports:
+      - "3080:8000"
     depends_on:
       - gitea
-    environment:
-      DRONE_OPEN: true
-      DRONE_GITEA: true
-      DRONE_NETWORK: default
-      DRONE_DEBUG: true
-      DRONE_ADMIN: gerardo.parrello
-      DRONE_USER_CREATE: username:gerardo.parrello,admin:true
-      DRONE_SERVER_PORT: :8080
-      DRONE_DATABASE_DRIVER: mysql
-      DRONE_DATABASE_DATASOURCE: root:gitea@tcp(db:3306)/gitea?parseTime=true
-      DRONE_GIT_ALWAYS_AUTH: false
-      DRONE_GITEA_SERVER: http://gitea:3000/
-      DRONE_RPC_SECRET: $RPC_SECRET
-      DRONE_SERVER_HOST: $HOST_IP:8080
-      DRONE_HOST: http://$HOST_IP:8080
-      DRONE_SERVER_PROTO: http
-      DRONE_TLS_AUTOCERT: false
-      DRONE_AGENTS_ENABLED: true
     networks:
-      - giteanet
+      - gitea-net
     dns:
       - 10.80.0.2
 
-  drone-agent:
-    image: drone/agent:latest
-    container_name: drone-agent
-    command: agent
-    restart: always
-    depends_on:
-      - drone-server
+  woodpecker-agent:
+    image: woodpeckerci/woodpecker-agent:latest
+    container_name: woodpecker-agent
+    environment:
+      - WOODPECKER_SERVER=http://woodpecker-server:8000
+      - WOODPECKER_AGENT_SECRET
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
-      - drone-agent:/data
-    environment:
-      DRONE_RPC_SERVER: http://drone-server:8080
-      DRONE_RPC_SECRET: $RPC_SECRET
-      DRONE_RUNNER_CAPACITY: 1
-      DRONE_RUNNER_NETWORKS: giteanet
+    depends_on:
+      - woodpecker-server
     networks:
-      - giteanet
+      - gitea-net
     dns:
       - 10.80.0.2
 
 volumes:
-  gitea: {}
-  db: {}
-  drone: {}
-  drone-agent: {}
+  db:
+  gitea:
+  woodpecker:
 
 networks:
-  giteanet:
-    name: giteanet
+  gitea-net:
+    driver: bridge
