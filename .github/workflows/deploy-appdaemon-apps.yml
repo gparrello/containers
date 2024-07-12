@@ -1,4 +1,0 @@
-# 1. connect to host, use:
-# - https://github.com/marketplace/actions/set-up-wireguard or
-# - https://github.com/ackersonde/simple-wireguard-deploy/blob/master/.github/workflows/test.yml
-# 2. copy files under home-assistant/appdaemon/apps to appropriate folder in the host
