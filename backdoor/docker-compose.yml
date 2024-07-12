@@ -39,11 +39,6 @@ services:
       net.ipv4.ip_forward: 1
     dns:
       - 10.80.0.2
-    healthcheck:
-      test: curl -sS http://127.0.0.1:5000 || exit 1
-      interval: 30s
-      timeout: 10s
-      retries: 3
 
   vpn-ui:  # TODO: fix configs now coming from UI
     image: ngoduykhanh/wireguard-ui:latest
@@ -68,3 +63,8 @@ services:
     volumes:
       - "${CONTAINER_DATA_PATH}/wireguard-ui/db:/app/db"
       - "${CONTAINER_DATA_PATH}/wireguard/config:/config"
+    healthcheck:
+      test: curl -sS http://127.0.0.1:5000 || exit 1
+      interval: 30s
+      timeout: 10s
+      retries: 3
