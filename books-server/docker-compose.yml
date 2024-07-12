@@ -27,6 +27,11 @@ services:
     restart: unless-stopped
     dns:
       - 10.80.0.2
+    healthcheck:
+      test: curl -sS http://127.0.0.1:8080 || exit 1
+      interval: 30s
+      timeout: 10s
+      retries: 3
     
   calibre-web:
     image: lscr.io/linuxserver/calibre-web:latest
@@ -45,6 +50,11 @@ services:
     restart: unless-stopped
     dns:
       - 10.80.0.2
+    healthcheck:
+      test: curl -sS http://127.0.0.1:8083 || exit 1
+      interval: 30s
+      timeout: 10s
+      retries: 3
 
   readarr:
     restart: unless-stopped
@@ -62,6 +72,11 @@ services:
       - /data:/data
     dns:
       - 10.80.0.2
+    healthcheck:
+      test: curl -sS http://127.0.0.1:8787 || exit 1
+      interval: 30s
+      timeout: 10s
+      retries: 3
   
   # https://github.com/jsavargas/telethon_downloader
   telethon_downloader:
