@@ -11,7 +11,7 @@ services:
       - gitea-db-data:/var/lib/postgresql/data
     networks:
       - gitea-net
-
+    
   woodpecker-db:
     restart: unless-stopped
     image: postgres:13
@@ -50,6 +50,11 @@ services:
       - gitea-net
     dns:
       - 10.80.0.2
+    healthcheck:
+      test: curl -sS http://127.0.0.1:3000 || exit 1
+      interval: 30s
+      timeout: 10s
+      retries: 3
 
   woodpecker-server:
     restart: unless-stopped
@@ -75,6 +80,11 @@ services:
       - gitea-net
     dns:
       - 10.80.0.2
+    healthcheck:
+      test: curl -sS http://127.0.0.1:8000 || exit 1
+      interval: 30s
+      timeout: 10s
+      retries: 3
 
   woodpecker-agent:
     restart: unless-stopped
