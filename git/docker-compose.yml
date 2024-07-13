@@ -75,7 +75,7 @@ services:
     image: woodpeckerci/woodpecker-agent:latest
     container_name: woodpecker-agent
     environment:
-      - WOODPECKER_SERVER=http://woodpecker-server:8000
+      - WOODPECKER_SERVER=woodpecker-server:8000
       - WOODPECKER_AGENT_SECRET
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
