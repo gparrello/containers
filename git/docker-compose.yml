@@ -12,21 +12,6 @@ services:
     networks:
       - gitea-net
     
-  woodpecker-db:
-    restart: unless-stopped
-    image: postgres:13
-    container_name: woodpecker-db
-    environment:
-      POSTGRES_DB: woodpecker
-      POSTGRES_USER: woodpecker
-      POSTGRES_PASSWORD: woodpecker_pass
-    volumes:
-      - woodpecker-db-data:/var/lib/postgresql/data
-    networks:
-      - gitea-net
-    dns:
-      - 10.80.0.2
-
   gitea:
     restart: unless-stopped
     image: gitea/gitea:latest
@@ -56,51 +41,9 @@ services:
       timeout: 10s
       retries: 3
 
-  woodpecker-server:
-    restart: unless-stopped
-    image: woodpeckerci/woodpecker-server:latest
-    container_name: woodpecker-server
-    environment:
-      - WOODPECKER_OPEN=true
-      - WOODPECKER_HOST=http://woodpecker.lan
-      - WOODPECKER_GITEA=true
-      - WOODPECKER_GITEA_URL=http://gitea.lan
-      - WOODPECKER_GITEA_CLIENT
-      - WOODPECKER_GITEA_SECRET
-      - WOODPECKER_AGENT_SECRET
-      - WOODPECKER_SERVER_ADDR=:8000
-      - WOODPECKER_DATABASE_DRIVER=postgres
-      - WOODPECKER_DATABASE_DATASOURCE=postgres://woodpecker:woodpecker_pass@woodpecker-db:5432/woodpecker?sslmode=disable
-    ports:
-      - 3080:8000
-    depends_on:
-      - woodpecker-db
-      - gitea
-    networks:
-      - gitea-net
-    dns:
-      - 10.80.0.2
-    
-  woodpecker-agent:
-    restart: unless-stopped
-    image: woodpeckerci/woodpecker-agent:latest
-    container_name: woodpecker-agent
-    environment:
-      - WOODPECKER_SERVER=woodpecker-server:8000
-      - WOODPECKER_AGENT_SECRET
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
-    depends_on:
-      - woodpecker-server
-    networks:
-      - gitea-net
-    dns:
-      - 10.80.0.2
-
 networks:
   gitea-net:
 
 volumes:
   gitea-db-data:
   gitea-data:
-  woodpecker-db-data:
