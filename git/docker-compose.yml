@@ -80,12 +80,7 @@ services:
       - gitea-net
     dns:
       - 10.80.0.2
-    healthcheck:
-      test: curl -sS http://127.0.0.1:8000 || exit 1
-      interval: 30s
-      timeout: 10s
-      retries: 3
-
+    
   woodpecker-agent:
     restart: unless-stopped
     image: woodpeckerci/woodpecker-agent:latest
