@@ -1,15 +1,27 @@
 services:
   db:
     image: postgres:13
-    container_name: db
+    container_name: gitea_db
     environment:
-      - POSTGRES_DB=gitea
-      - POSTGRES_USER
-      - POSTGRES_PASSWORD
+      POSTGRES_DB: gitea
+      POSTGRES_USER: gitea
+      POSTGRES_PASSWORD: gitea_pass
     volumes:
-      - db:/var/lib/postgresql/data
+      - gitea-db-data:/var/lib/postgresql/data
     networks:
-      - gitea-net   
+      - gitea-net
+
+  woodpecker_db:
+    image: postgres:13
+    container_name: woodpecker_db
+    environment:
+      POSTGRES_DB: woodpecker
+      POSTGRES_USER: woodpecker
+      POSTGRES_PASSWORD: woodpecker_pass
+    volumes:
+      - woodpecker-db-data:/var/lib/postgresql/data
+    networks:
+      - gitea-net
     dns:
       - 10.80.0.2
 
@@ -22,10 +34,10 @@ services:
       - DB_TYPE=postgres
       - DB_HOST=db:5432
       - DB_NAME=gitea
-      - DB_USER=$POSTGRES_USER
-      - DB_PASSWD=$POSTGRES_PASSWORD
+      - DB_USER=gitea
+      - DB_PASSWD=gitea_pass
     volumes:
-      - gitea:/data
+      - gitea-data:/data
     ports:
       - "3000:3000"
       - "3022:22"
@@ -47,13 +59,12 @@ services:
       - WOODPECKER_GITEA_SECRET
       - WOODPECKER_AGENT_SECRET
       - WOODPECKER_SERVER_ADDR=:8000
-      - WOODPECKER_DATABASE_DRIVER=sqlite3
-      - WOODPECKER_DATABASE_DATASOURCE=/var/lib/woodpecker/woodpecker.sqlite
-    volumes:
-      - woodpecker:/var/lib/woodpecker
+      - WOODPECKER_DATABASE_DRIVER=postgres
+      - WOODPECKER_DATABASE_DATASOURCE=postgres://woodpecker:woodpecker_pass@woodpecker_db:5432/woodpecker?sslmode=disable
     ports:
       - "3080:8000"
     depends_on:
+      - woodpecker_db
       - gitea
     networks:
       - gitea-net
@@ -75,11 +86,11 @@ services:
     dns:
       - 10.80.0.2
 
-volumes:
-  db:
-  gitea:
-  woodpecker:
-
 networks:
   gitea-net:
     driver: bridge
+
+volumes:
+  gitea-db-data:
+  gitea-data:
+  woodpecker-db-data:
