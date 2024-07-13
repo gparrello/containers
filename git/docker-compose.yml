@@ -42,8 +42,8 @@ services:
     volumes:
       - gitea-data:/data
     ports:
-      - "3000:3000"
-      - "3022:22"
+      - 3000:3000
+      - 3022:22
     depends_on:
       - gitea-db
     networks:
@@ -67,7 +67,7 @@ services:
       - WOODPECKER_DATABASE_DRIVER=postgres
       - WOODPECKER_DATABASE_DATASOURCE=postgres://woodpecker:woodpecker_pass@woodpecker-db:5432/woodpecker?sslmode=disable
     ports:
-      - "3080:8000"
+      - 3080:8000
     depends_on:
       - woodpecker-db
       - gitea
