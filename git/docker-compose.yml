@@ -63,5 +63,4 @@ networks:
 volumes:
   gitea-db-data:
   gitea-data:
-  gitea-runner-config:
   gitea-runner-data:
