@@ -94,7 +94,6 @@ services:
 
 networks:
   gitea-net:
-    driver: bridge
 
 volumes:
   gitea-db-data:
