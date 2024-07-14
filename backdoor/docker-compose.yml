@@ -53,8 +53,8 @@ services:
       - WGUI_SESSION_SECRET
       - WGUI_USERNAME
       - WGUI_PASSWORD
-      - WGUI_MANAGE_START=true
-      - WGUI_MANAGE_RESTART=true
+      - WGUI_MANAGE_START=false
+      - WGUI_MANAGE_RESTART=false
       - WGUI_LOG_LEVEL=DEBUG
     depends_on:
       - vpn
