@@ -42,6 +42,7 @@ services:
       retries: 3
   
   gitea-runner:
+    restart: unless-stopped
     container_name: gitea-runner
     image: gitea/act_runner:latest
     environment:
