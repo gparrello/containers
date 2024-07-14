@@ -9,8 +9,6 @@ on:
 jobs:
   Deploy:
     runs-on: ubuntu-latest
-    env:
-      WEBHOOKS: ${{ secrets.PORTAINER_WEBHOOKS }}
     strategy:
       matrix:
         directory:
@@ -20,7 +18,7 @@ jobs:
       - name: Set Webhook URL
         id: set-webhook-url
         run: |
-          WEBHOOKS_JSON=${{ secrets.WEBHOOKS }}
+          WEBHOOKS_JSON=${{ secrets.PORTAINER_WEBHOOKS }}
           WEBHOOK_URL=$(echo $WEBHOOKS_JSON | jq -r ".${{ matrix.directory }}")
           echo "::set-output name=WEBHOOK_URL::$WEBHOOK_URL"
 
@@ -28,4 +26,3 @@ jobs:
         if: ${{ github.event.head_commit.message != '' }}
         run: |
           curl -X POST ${{ steps.set-webhook-url.outputs.WEBHOOK_URL }}
-
