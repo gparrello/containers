@@ -1,9 +1,0 @@
-name: Gitea Actions Test
-run-name: ${{ gitea.actor }} is testing out Gitea Actions 🚀
-on: [push]
-
-jobs:
-  deploy:
-    runs-on: ubuntu-latest
-    steps: # Hola
-      - run: curl -X POST ${{ secrets.TESTDEPLOY }}
