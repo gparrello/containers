@@ -35,7 +35,7 @@ services:
       timeout: 10s
       retries: 3
     devices:
-      - /dev/dri/card1:/dev/dri/card1
+      - /dev/dri:/dev/dri
 
   jellyseerr:
     image: fallenbagel/jellyseerr:latest
