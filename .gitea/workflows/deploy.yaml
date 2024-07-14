@@ -1,5 +1,5 @@
 name: Trigger Webhooks Based on Directory Updates
-run-name: ${{ gitea.actor }} deploying a service
+run-name: ${{ github.actor }} deploying a service
 
 on:
   push:
@@ -11,8 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        directory:
-          - tests
+        directory: [tests]
 
     steps:
       - name: Checkout repository
@@ -20,6 +19,7 @@ jobs:
 
       - name: Trigger Webhook
         run: |
-          # curl -X POST $(echo "${{ secrets.PORTAINER_WEBHOOKS }}" | jq -r ".${{ matrix.directory }}")
-          # echo "$(echo \"${{ secrets.PORTAINER_WEBHOOKS }}\" | jq -r \".${{ matrix.directory }}\")"
-          echo "${{ secrets.PORTAINER_WEBHOOKS }}"
+          WEBHOOKS_JSON=${{ secrets.PORTAINER_WEBHOOKS }}
+          WEBHOOK_URL=$(echo $WEBHOOKS_JSON | jq -r ".${{ matrix.directory[0] }}")
+          echo "Webhook URL: $WEBHOOK_URL"
+          curl -X POST $WEBHOOK_URL
