@@ -1,0 +1,35 @@
+name: Trigger Webhooks Based on Directory Updates
+run-name: ${{ gitea.actor }} deploying a service
+
+on:
+  push:
+    paths:
+      - 'tests/**'
+
+jobs:
+  Deploy:
+    runs-on: ubuntu-latest
+    env:
+      WEBHOOKS: ${{ secrets.PORTAINER_WEBHOOKS }}
+    strategy:
+      matrix:
+        directory:
+          - tests
+
+    steps:
+      - name: Set Webhook URL
+        id: set-webhook-url
+        run: |
+          WEBHOOKS_JSON=${{ secrets.WEBHOOKS }}
+          WEBHOOK_URL=$(echo $WEBHOOKS_JSON | jq -r ".${{ matrix.directory }}")
+          echo "::set-output name=WEBHOOK_URL::$WEBHOOK_URL"
+
+      - name: Trigger Webhook
+        if: ${{ github.event.head_commit.message != '' }}
+        run: |
+          curl \
+            -X POST \
+            -H "Content-Type: application/json" \
+            -d '{"directory": "${{ matrix.directory }}", "commit": "${{ github.sha }}"}' \
+            ${{ steps.set-webhook-url.outputs.WEBHOOK_URL }}
+
