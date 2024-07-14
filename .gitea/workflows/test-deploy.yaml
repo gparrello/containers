@@ -6,7 +6,4 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-      - name: Update Service via Webhook
-        uses: newarifrh/portainer-service-webhook@v1
-        with:
-          webhook_url: ${{ secrets.TESTDEPLOY }}
+      - run: curl -X POST ${{ secrets.TESTDEPLOY }}
