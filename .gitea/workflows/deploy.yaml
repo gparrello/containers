@@ -19,10 +19,8 @@ jobs:
         id: set-webhook-url
         run: |
           WEBHOOKS_JSON=${{ secrets.PORTAINER_WEBHOOKS }}
-          echo "$WEBHOOKS_JSON"
           WEBHOOK_URL=$(echo $WEBHOOKS_JSON | jq -r ".${{ matrix.directory }}")
-          echo "$WEBHOOKS_URL"
-          # echo "::set-output name=WEBHOOK_URL::$WEBHOOK_URL"
+          echo "::set-output name=WEBHOOK_URL::$WEBHOOK_URL"
 
       - name: Trigger Webhook
         if: ${{ github.event.head_commit.message != '' }}
