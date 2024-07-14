@@ -17,4 +17,4 @@ jobs:
     steps:
       - name: Trigger Webhook
         run: |
-          curl -X POST $(echo ${{ secrets.PORTAINER_WEBHOOKS }} | jq -r ".${{ matrix.directory }}")
+          curl -X POST $(echo "${{ secrets.PORTAINER_WEBHOOKS }}" | jq -r ".${{ matrix.directory }}")
