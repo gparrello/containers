@@ -1,0 +1,9 @@
+name: Gitea Actions Test
+run-name: ${{ gitea.actor }} is testing out Gitea Actions 🚀
+on: [push]
+
+jobs:
+  Explore-Gitea-Actions:
+    runs-on: ubuntu-latest
+    steps:
+      - run: curl http://portainer.lan/api/stacks/webhooks/${{ secrets.TESTDEPLOY }}
