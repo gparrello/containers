@@ -19,7 +19,7 @@ jobs:
 
       - name: Trigger Webhook
         run: |
-          WEBHOOKS_JSON=${{ secrets.PORTAINER_WEBHOOKS }}
+          WEBHOOKS_JSON=${{ vars.PORTAINER_WEBHOOKS }}
           WEBHOOK_URL=$(echo $WEBHOOKS_JSON | jq -r ".${{ matrix.directory[0] }}")
           echo "Webhook URL: $WEBHOOK_URL"
           curl -X POST $WEBHOOK_URL
