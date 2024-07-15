@@ -4,11 +4,12 @@
 - dns
 - git
 - dhcp?
+- portainer
 ## Content
 - media
 - books
 - download
-# Misc
+## Misc
 - homepage
 - home assistant
 - speedtest
@@ -16,7 +17,8 @@
 - watchtower
 - chatgpt telegram
 - dozzle
-- portainer
+## TDB
+- financial manager
 
 # How to setup
 ## Prepare environment
