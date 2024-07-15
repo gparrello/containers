@@ -1,4 +1,24 @@
-# Start
+# List of services
+## Core
+- vpn
+- dns
+- git
+- dhcp?
+## Content
+- media
+- books
+- download
+# Misc
+- homepage
+- home assistant
+- speedtest
+- tools
+- watchtower
+- chatgpt telegram
+- dozzle
+- portainer
+
+# How to setup
 ## Prepare environment
 1. Set a host with docker
 ```
