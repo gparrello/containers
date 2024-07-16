@@ -6,6 +6,7 @@ services:
     environment:
       - CONTAINER_DATA_PATH
       - DISABLE_ANALYTICS=true
+      - DEFAULT_COLOR_SCHEME=dark
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock # Optional, only if you want docker integration
       - '$CONTAINER_DATA_PATH/homarr/configs:/app/data/configs'
