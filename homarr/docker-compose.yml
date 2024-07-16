@@ -4,6 +4,7 @@ services:
     image: ghcr.io/ajnart/homarr:latest
     restart: unless-stopped
     environment:
+      - TZ=Europe/Madrid
       - CONTAINER_DATA_PATH
       - DISABLE_ANALYTICS=true
       - DEFAULT_COLOR_SCHEME=dark
