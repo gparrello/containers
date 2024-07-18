@@ -20,7 +20,8 @@ services:
     restart: unless-stopped
     dns:
       - 10.80.0.2
-    security_opt:  
+    security_opt:
+      # https://www.reddit.com/r/homeassistant/comments/yfurel/help_requested_passing_bluetooth_adaptor_into_ha/
       - apparmor:docker-ble-policy
 
   appdaemon:
