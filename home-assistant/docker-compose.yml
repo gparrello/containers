@@ -20,6 +20,8 @@ services:
     restart: unless-stopped
     dns:
       - 10.80.0.2
+    security_opt:  
+      - apparmor:docker-ble-policy
 
   appdaemon:
     container_name: appdaemon
