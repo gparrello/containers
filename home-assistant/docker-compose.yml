@@ -14,6 +14,7 @@ services:
       retries: 2
     volumes:
       - /etc/localtime:/etc/localtime:ro
+      - /run/dbus:/run/dbus:ro
       - $DOCKER_DATA_PATH/$ENV/home-assistant/home-assistant/config:/config
     network_mode: host
     restart: unless-stopped
