@@ -4,7 +4,7 @@ services:
     networks:
       - reverse-proxy_caddy
     labels:
-      caddy: losbubos.duckdns.org
+      caddy: whoami.gparrello.duckdns.org
       caddy.reverse_proxy: "{{upstreams 80}}"
 
 networks:
