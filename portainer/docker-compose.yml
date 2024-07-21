@@ -3,7 +3,6 @@ services:
     image: portainer/portainer-ee:2.19.5
     container_name: portainer
     restart: unless-stopped
-    user: 1000:1000
     healthcheck:
       test: curl -m 90 -sLf https://localhost:9443 || exit 1
       interval: 30s
