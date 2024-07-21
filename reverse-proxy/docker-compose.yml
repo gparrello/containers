@@ -8,7 +8,7 @@ services:
     environment:
       - UID=1001
       - GID=1001
-      - CADDY_INGRESS_NETWORKS=caddy
+      - CADDY_INGRESS_NETWORKS=reverse-proxy_caddy
     networks:
       - caddy
     volumes:
