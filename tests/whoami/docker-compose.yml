@@ -8,5 +8,5 @@ services:
       caddy.reverse_proxy: "{{upstreams 80}}"
 
 networks:
-  caddy:
+  reverse-proxy_caddy:
     external: true
