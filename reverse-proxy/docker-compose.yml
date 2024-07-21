@@ -18,7 +18,7 @@ services:
 
 networks:
   caddy:
-    external: true
+    attachable: true
 
 volumes:
   caddy_data: {}
