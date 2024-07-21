@@ -1,15 +1,16 @@
 services:
-  homeassistant:
-    image: portainer/portainer-ee:2.17.1
+  portainer:
+    image: portainer/portainer-ee:latest
     container_name: portainer
-    restart: always
+    restart: unless-stopped
     user: 1000:1000
     healthcheck:
-      test: 'curl -m 90 -sLf http://localhost:9443 || date >> /data/healthcheck'
-      interval: 90s
-      timeout: 60s
-      retries: 2
+      test: curl -m 90 -sLf https://localhost:9443 || exit 1
+      interval: 30s
+      timeout: 10s
+      retries: 3
     volumes:
-      - "/home/gerardo/.container-data/portainer/data:/data"
+      - /var/run/docker.socl:/var/run/docker.sock
+      - /home/gerardo/.container-data/portainer/data:/data
     ports:
       - 9443:9443
