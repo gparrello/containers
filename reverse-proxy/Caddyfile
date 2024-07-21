@@ -1,0 +1,246 @@
+# Homepage
+home.lan {
+    reverse_proxy 10.80.0.2:7575 {
+        header_up Host {host}
+        header_up X-Real-IP {remote}
+        header_up X-Forwarded-For {remote}
+        header_up X-Frame-Options "SAMEORIGIN"
+        header_down -X-Frame-Options
+    }
+}
+
+# Media stack
+jellyfin.lan {
+    reverse_proxy 10.80.0.2:8096 {
+        header_up Host {host}
+        header_up X-Real-IP {remote}
+        header_up X-Forwarded-For {remote}
+        header_up X-Frame-Options "SAMEORIGIN"
+        header_down -X-Frame-Options
+    }
+}
+
+jellyseerr.lan {
+    reverse_proxy 10.80.0.2:8097 {
+        header_up Host {host}
+        header_up X-Real-IP {remote}
+        header_up X-Forwarded-For {remote}
+        header_up X-Frame-Options "SAMEORIGIN"
+        header_down -X-Frame-Options
+    }
+}
+
+radarr.lan {
+    reverse_proxy 10.80.0.2:8098 {
+        header_up Host {host}
+        header_up X-Real-IP {remote}
+        header_up X-Forwarded-For {remote}
+        header_up X-Frame-Options "SAMEORIGIN"
+        header_down -X-Frame-Options
+    }
+}
+
+sonarr.lan {
+    reverse_proxy 10.80.0.2:8099 {
+        header_up Host {host}
+        header_up X-Real-IP {remote}
+        header_up X-Forwarded-For {remote}
+        header_up X-Frame-Options "SAMEORIGIN"
+        header_down -X-Frame-Options
+    }
+}
+
+bazarr.lan {
+    reverse_proxy 10.80.0.2:8094 {
+        header_up Host {host}
+        header_up X-Real-IP {remote}
+        header_up X-Forwarded-For {remote}
+        header_up X-Frame-Options "SAMEORIGIN"
+        header_down -X-Frame-Options
+    }
+}
+
+# Books stack
+calibre.lan {
+    reverse_proxy 10.80.0.2:8080 {
+        header_up Host {host}
+        header_up X-Real-IP {remote}
+        header_up X-Forwarded-For {remote}
+        header_up X-Frame-Options "SAMEORIGIN"
+        header_down -X-Frame-Options
+    }
+}
+
+books.lan {
+    reverse_proxy 10.80.0.2:8083 {
+        header_up Host {host}
+        header_up X-Real-IP {remote}
+        header_up X-Forwarded-For {remote}
+        header_up X-Frame-Options "SAMEORIGIN"
+        header_down -X-Frame-Options
+    }
+}
+
+readarr.lan {
+    reverse_proxy 10.80.0.2:8082 {
+        header_up Host {host}
+        header_up X-Real-IP {remote}
+        header_up X-Forwarded-For {remote}
+        header_up X-Frame-Options "SAMEORIGIN"
+        header_down -X-Frame-Options
+    }
+}
+
+# Torrent stack
+torrent.lan {
+    reverse_proxy 10.80.0.2:7080 {
+        header_up Host {host}
+        header_up X-Real-IP {remote}
+        header_up X-Forwarded-For {remote}
+        header_up X-Frame-Options "SAMEORIGIN"
+        header_down -X-Frame-Options
+    }
+}
+
+prowlarr.lan {
+    reverse_proxy 10.80.0.2:8095 {
+        header_up Host {host}
+        header_up X-Real-IP {remote}
+        header_up X-Forwarded-For {remote}
+        header_up X-Frame-Options "SAMEORIGIN"
+        header_down -X-Frame-Options
+    }
+}
+
+# Home Assistant stack
+home-assistant.lan {
+    reverse_proxy 10.80.0.2:8123 {
+        header_up Host {host}
+        header_up X-Real-IP {remote}
+        header_up X-Forwarded-For {remote}
+        header_up X-Forwarded-Proto {scheme}
+        header_up X-Frame-Options "SAMEORIGIN"
+        header_down -X-Frame-Options
+        header_up Upgrade {upstream}
+        header_up Connection "upgrade"
+    }
+}
+
+appdaemon.lan {
+    reverse_proxy 10.80.0.2:5050 {
+        header_up Host {host}
+        header_up X-Real-IP {remote}
+        header_up X-Forwarded-For {remote}
+        header_up X-Frame-Options "SAMEORIGIN"
+        header_down -X-Frame-Options
+    }
+}
+
+# Tools stack
+tools.lan {
+    reverse_proxy 10.80.0.2:17700 {
+        header_up Host {host}
+        header_up X-Real-IP {remote}
+        header_up X-Forwarded-For {remote}
+        header_up X-Frame-Options "SAMEORIGIN"
+        header_down -X-Frame-Options
+    }
+}
+
+pdf.lan {
+    reverse_proxy 10.80.0.2:17701 {
+        header_up Host {host}
+        header_up X-Real-IP {remote}
+        header_up X-Forwarded-For {remote}
+        header_up X-Frame-Options "SAMEORIGIN"
+        header_down -X-Frame-Options
+    }
+}
+
+# Networking stack
+wireguard.lan {
+    reverse_proxy 10.80.0.2:5000 {
+        header_up Host {host}
+        header_up X-Real-IP {remote}
+        header_up X-Forwarded-For {remote}
+        header_up X-Frame-Options "SAMEORIGIN"
+        header_down -X-Frame-Options
+    }
+}
+
+pihole.lan {
+    redir / /admin
+    reverse_proxy /admin 10.80.0.2:5380 {
+        header_up Host {host}
+        header_up X-Real-IP {remote}
+        header_up X-Forwarded-For {remote}
+        header_up X-Frame-Options "SAMEORIGIN"
+        header_down -X-Frame-Options
+    }
+    reverse_proxy /admin/index.php 10.80.0.2:5380 {
+        header_up Host {host}
+        header_up X-Real-IP {remote}
+        header_up X-Forwarded-For {remote}
+        header_up X-Frame-Options "SAMEORIGIN"
+        header_down -X-Frame-Options
+    }
+    reverse_proxy ~ \.php$ 10.80.0.2:5380 {
+        header_up Host {host}
+        header_up X-Real-IP {remote}
+        header_up X-Forwarded-For {remote}
+        header_up X-Frame-Options "SAMEORIGIN"
+        header_down -X-Frame-Options
+    }
+}
+
+# Management tools
+portainer.lan {
+    reverse_proxy https://10.80.0.2:9443 {
+        header_up Host {host}
+        header_up X-Real-IP {remote}
+        header_up X-Forwarded-For {remote}
+        header_up X-Frame-Options "SAMEORIGIN"
+        header_down -X-Frame-Options
+    }
+}
+
+dozzle.lan {
+    reverse_proxy 10.80.0.2:9999 {
+        header_up Host {host}
+        header_up X-Real-IP {remote}
+        header_up X-Forwarded-For {remote}
+        header_up X-Frame-Options "SAMEORIGIN"
+        header_down -X-Frame-Options
+    }
+}
+
+speedtest.lan {
+    reverse_proxy 10.80.0.2:8765 {
+        header_up Host {host}
+        header_up X-Real-IP {remote}
+        header_up X-Forwarded-For {remote}
+        header_up X-Frame-Options "SAMEORIGIN"
+        header_down -X-Frame-Options
+    }
+}
+
+# Git stack
+gitea.lan {
+    reverse_proxy 10.80.0.2:3000 {
+        header_up Host {host}
+        header_up X-Real-IP {remote}
+        header_up X-Forwarded-For {remote}
+        header_up X-Frame-Options "SAMEORIGIN"
+        header_down -X-Frame-Options
+    }
+}
+
+woodpecker.lan {
+    reverse_proxy 10.80.0.2:3080 {
+        header_up Host {host}
+        header_up X-Real-IP {remote}
+        header_up X-Forwarded-For {remote}
+        header_up X-Frame-Options "SAMEORIGIN"
+        header_down -X-Frame-Options
+    }
+}
