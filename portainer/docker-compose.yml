@@ -4,7 +4,7 @@ services:
     container_name: portainer
     restart: unless-stopped
     healthcheck:
-      test: curl -m 90 -sLf https://localhost:9443 || exit 1
+      test: curl -m 90 -sLf http://localhost:9443 || exit 1
       interval: 30s
       timeout: 10s
       retries: 3
