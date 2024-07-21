@@ -3,9 +3,10 @@ services:
     container_name: caddy
     image: lucaslorentz/caddy-docker-proxy:ci-alpine
     ports:
-      - 2080:80
       - 2443:443
     environment:
+      - UID=1001
+      - GID=1001
       - CADDY_INGRESS_NETWORKS=caddy
     networks:
       - caddy
