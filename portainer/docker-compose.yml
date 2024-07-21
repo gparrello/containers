@@ -9,7 +9,7 @@ services:
       timeout: 10s
       retries: 3
     volumes:
-      - /var/run/docker.socl:/var/run/docker.sock
+      - /var/run/docker.sock:/var/run/docker.sock
       - /home/gerardo/.container-data/portainer/data:/data
     ports:
       - 9443:9443
