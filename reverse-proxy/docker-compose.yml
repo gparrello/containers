@@ -6,4 +6,3 @@ services:
       - 443:443
     volumes:
       - ./Caddyfile:/etc/caddy/Caddyfile
-      - ./site:/var/www/html
