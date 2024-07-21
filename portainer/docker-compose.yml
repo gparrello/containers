@@ -1,6 +1,6 @@
 services:
   portainer:
-    image: portainer/portainer-ee:2.19.5
+    image: portainer/portainer-ee:2.20.3
     container_name: portainer
     restart: unless-stopped
     healthcheck:
