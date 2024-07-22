@@ -1,7 +1,6 @@
 volumes:
   prowlarr:
   qbittorrent:
-  # qbitmanage:
 
 services:
   prowlarr:
@@ -48,15 +47,12 @@ services:
       timeout: 10s
       retries: 3
 
-  # qbitmanage:
-  #   container_name: qbitmanage
-  #   image: ghcr.io/hotio/qbitmanage
-  #   environment:
-  #     - PUID=1000
-  #     - PGID=1000
-  #     - UMASK=002
-  #     - TZ=Europe/Madrid
-  #     - ARGS
-  #   volumes:
-  #     - qbitmanage:/config
-  #     - /data:/data
+  qbittorrent-notify:
+    image: 'adevjoe/qbittorrent-notify:latest'
+    environment:
+      - QBITTORRENT_PASSWORD
+      - QBITTORRENT_USERNAME=admin
+      - QBITTORRENT_HOST=qbittorrent
+      - CHAT_ID
+      - BOT_TOKEN
+    restart: always
