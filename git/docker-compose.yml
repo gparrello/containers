@@ -46,13 +46,13 @@ services:
     container_name: gitea-runner
     image: gitea/act_runner:latest
     environment:
-      - CONFIG_FILE=/config.yaml
+      - CONFIG_FILE=/config/runner.yaml
       - GITEA_INSTANCE_URL=http://gitea.lan
       - GITEA_RUNNER_REGISTRATION_TOKEN
       - GITEA_RUNNER_NAME=runner
       # - GITEA_RUNNER_LABELS="${RUNNER_LABELS}"
     volumes:
-      - ./config/runner.yaml:/config.yaml
+      - ./config:/config
       - gitea-runner-data:/data
       - /var/run/docker.sock:/var/run/docker.sock
     dns:
