@@ -12,7 +12,8 @@ services:
       - '${CONTAINER_DATA_PATH}/unbound:/opt/unbound/etc/unbound/'
     cap_add:
       - NET_ADMIN
-    network_mode: host
+    ports:
+      - 5353:53
 
   pihole:
     depends_on:
