@@ -10,6 +10,8 @@ services:
       - CONTAINER_DATA_PATH
     volumes:
       - '${CONTAINER_DATA_PATH}/unbound:/opt/unbound/etc/unbound/'
+    cap_add:
+      - NET_ADMIN
     ports:
       - 5300:53/tcp
       - 5300:53/udp
