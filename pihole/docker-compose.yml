@@ -23,10 +23,18 @@ services:
     # All env vars here: https://github.com/pi-hole/docker-pi-hole/?tab=readme-ov-file#environment-variables
     environment:
       - TZ=Europe/Madrid
-      - WEBPASSWORD
       - CONTAINER_DATA_PATH
-      - PIHOLE_DNS_=127.0.0.1#5300
+      - WEBPASSWORD
       - WEB_PORT=5380
+      - PIHOLE_DNS_=127.0.0.1#5300
+      - DNSSEC=true
+      - DHCP_ACTIVE=true
+      - DHCP_START=10.80.0.10
+      - DHCP_END=10.80.0.100
+      - DHCP_ROUTER=10.80.0.1
+      - DHCP_rapid_commit=true
+      - INTERFACE=enp0s25
+      - DNSMASQ_LISTENING=local
     volumes:
      - '${CONTAINER_DATA_PATH}/pihole:/etc/pihole'
      - '${CONTAINER_DATA_PATH}/dnsmasq.d:/etc/dnsmasq.d'
