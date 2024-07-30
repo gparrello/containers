@@ -30,12 +30,12 @@ services:
       - WEB_PORT=5380
       - PIHOLE_DNS_=127.0.0.1#5300
       - DNSSEC=true
+      - INTERFACE=enp0s25
       - DHCP_ACTIVE=false
       # - DHCP_START=10.80.0.10
       # - DHCP_END=10.80.0.100
       # - DHCP_ROUTER=10.80.0.1
       # - DHCP_rapid_commit=true
-      - INTERFACE=enp0s25
       # - DNSMASQ_LISTENING=local
     volumes:
      - '${CONTAINER_DATA_PATH}/pihole:/etc/pihole'
