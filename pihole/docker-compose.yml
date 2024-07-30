@@ -13,8 +13,8 @@ services:
     cap_add:
       - NET_ADMIN
     ports:
-      - 5353:53/tcp
-      - 5353:53/udp
+      - 15353:53/tcp
+      - 15353:53/udp
 
   pihole:
     depends_on:
@@ -27,7 +27,7 @@ services:
       - TZ=Europe/Madrid
       - WEBPASSWORD
       - CONTAINER_DATA_PATH
-      - PIHOLE_DNS_=127.0.0.1#5353
+      - PIHOLE_DNS_=127.0.0.1#15353
       - WEB_PORT=5380
     volumes:
      - '${CONTAINER_DATA_PATH}/pihole:/etc/pihole'
@@ -37,8 +37,6 @@ services:
       - NET_ADMIN # Required if you are using Pi-hole as your DHCP server, else not needed
     restart: unless-stopped
     network_mode: host
-    dns:
-      - 127.0.0.1#5353
     healthcheck:
       test: curl -sS http://127.0.0.1:80 || exit 1
       interval: 30s
