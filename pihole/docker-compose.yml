@@ -10,11 +10,9 @@ services:
       - CONTAINER_DATA_PATH
     volumes:
       - '${CONTAINER_DATA_PATH}/unbound:/opt/unbound/etc/unbound/'
-    cap_add:
-      - NET_ADMIN
     ports:
-      - 15353:53/tcp
-      - 15353:53/udp
+      - 5300:53/tcp
+      - 5300:53/udp
 
   pihole:
     depends_on:
@@ -27,7 +25,7 @@ services:
       - TZ=Europe/Madrid
       - WEBPASSWORD
       - CONTAINER_DATA_PATH
-      - PIHOLE_DNS_=127.0.0.1#15353
+      - PIHOLE_DNS_=127.0.0.1#5300
       - WEB_PORT=5380
     volumes:
      - '${CONTAINER_DATA_PATH}/pihole:/etc/pihole'
