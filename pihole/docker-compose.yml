@@ -51,7 +51,7 @@ services:
     ports:
       - "53:53/tcp"
       - "10.80.0.2:53:53/udp"
-      # - "67:67/udp" # Only required if you are using Pi-hole as your DHCP server
+      - "67:67/udp" # Only required if you are using Pi-hole as your DHCP server
       - "5380:80/tcp"
     healthcheck:
       test: curl -sS http://127.0.0.1:80 || exit 1
