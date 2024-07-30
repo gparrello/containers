@@ -34,7 +34,7 @@ services:
       - DHCP_ROUTER=10.80.0.1
       - DHCP_rapid_commit=true
       - INTERFACE=enp0s25
-      - DNSMASQ_LISTENING=local
+      # - DNSMASQ_LISTENING=local
     volumes:
      - '${CONTAINER_DATA_PATH}/pihole:/etc/pihole'
      - '${CONTAINER_DATA_PATH}/dnsmasq.d:/etc/dnsmasq.d'
