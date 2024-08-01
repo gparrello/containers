@@ -24,8 +24,10 @@ services:
       - DB_NAME=gitea
       - DB_USER=gitea
       - DB_PASSWD=gitea_pass
-      - ALLOWED_HOST_LIST=*.lan
-      - DELIVER_TIMEOUT=30
+      - GITEA__security__DISABLE_WEBHOOKS=false
+      - GITEA__webhooks__ALLOWED_HOST_LIST=*.lan
+      - GITEA__webhooks__DELIVER_TIMEOUT=30
+      # - GITEA__cron__ENABLED=true
     volumes:
       - gitea-data:/data
     ports:
