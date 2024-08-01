@@ -24,6 +24,8 @@ services:
       - DB_NAME=gitea
       - DB_USER=gitea
       - DB_PASSWD=gitea_pass
+      - ALLOWED_HOST_LIST=*.lan
+      - DELIVER_TIMEOUT=30
     volumes:
       - gitea-data:/data
     ports:
