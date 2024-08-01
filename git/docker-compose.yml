@@ -71,3 +71,4 @@ volumes:
   gitea-db-data:
   gitea-data:
   gitea-runner-data:
+
