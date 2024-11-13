@@ -1,3 +1,7 @@
+networks:
+  internal-proxy:
+    external: true
+
 services:
   it-tools:
     image: 'ghcr.io/corentinth/it-tools:latest'
@@ -5,6 +9,11 @@ services:
       - '17700:80'
     restart: unless-stopped
     container_name: it-tools
+    environment:
+      - VIRTUAL_HOST=tools.home.lan
+      - VIRTUAL_PORT=80
+    networks:
+      - internal-proxy
     dns:
       - 10.80.0.2
     healthcheck:
@@ -23,8 +32,12 @@ services:
       - stirling-pdf-extra:/configs
       - stirling-pdf-custom:/customFiles/
     environment:
+      - VIRTUAL_HOST=pdf.home.lan
+      - VIRTUAL_PORT=8080
       - DOCKER_ENABLE_SECURITY=true
       - INSTALL_BOOK_AND_ADVANCED_HTML_OPS=true
+    networks:
+      - internal-proxy
     dns:
       - 10.80.0.2
     healthcheck:
