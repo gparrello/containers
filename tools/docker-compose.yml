@@ -5,8 +5,6 @@ networks:
 services:
   it-tools:
     image: 'ghcr.io/corentinth/it-tools:latest'
-    ports:
-      - '17700:80'
     restart: unless-stopped
     container_name: it-tools
     environment:
@@ -25,8 +23,6 @@ services:
   stirling-pdf:
     restart: unless-stopped
     image: frooodle/s-pdf:latest
-    ports:
-      - '17701:8080'
     volumes:
       - stirling-pdf-training:/usr/share/tessdata #Required for extra OCR languages
       - stirling-pdf-extra:/configs
