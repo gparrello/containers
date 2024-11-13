@@ -24,6 +24,8 @@ services:
     image: pihole/pihole:latest
     # All env vars here: https://github.com/pi-hole/docker-pi-hole/?tab=readme-ov-file#environment-variables
     environment:
+      - VIRTUAL_HOST=dns.home.lan
+      - VIRTUAL_PORT=5380
       - TZ=Europe/Madrid
       - CONTAINER_DATA_PATH
       - WEBPASSWORD
