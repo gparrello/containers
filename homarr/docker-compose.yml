@@ -1,9 +1,15 @@
+networks:
+  internal-proxy:
+    external: true
+
 services:
   homarr:
     container_name: homarr
     image: ghcr.io/ajnart/homarr:latest
     restart: unless-stopped
     environment:
+      - VIRTUAL_HOST=home.lan
+      - VIRTUAL_PORT=7575
       - TZ=Europe/Madrid
       - CONTAINER_DATA_PATH
       - DISABLE_ANALYTICS=true
@@ -15,6 +21,8 @@ services:
       - '$CONTAINER_DATA_PATH/homarr/data:/data'
     ports:
       - 7575:7575
+    networks:
+      - internal-proxy
     dns:
       - 10.80.0.2
     # healthcheck:
