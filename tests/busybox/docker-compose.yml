@@ -1,5 +1,15 @@
+---
+name: busy1
 services:
   test:
-    image: busybox:latest # Hola
-    container_name: test-busybox-alive
+    image: busybox:latest
+    container_name: test-busybox-alive1
+    command: sh -c "while true; do sleep 3600; done"
+
+---
+name: busy2
+services:
+  test:
+    image: busybox:latest
+    container_name: test-busybox-alive2
     command: sh -c "while true; do sleep 3600; done"
