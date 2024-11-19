@@ -23,6 +23,7 @@ services:
   stirling-pdf:
     restart: unless-stopped
     image: frooodle/s-pdf:latest
+    container_name: pdf-tools
     volumes:
       - stirling-pdf-training:/usr/share/tessdata #Required for extra OCR languages
       - stirling-pdf-extra:/configs
